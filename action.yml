@@ -1,7 +1,6 @@
 name: action-slack
 description: You can notify slack of GitHub Actions.
-author: 8398a7
-deprecated: "This action is archived as of 2025-09-13. Please migrate to slackapi/slack-github-action or another maintained alternative."
+author: h3y6e
 inputs:
   status:
     description: Specify success or failure or cancelled or custom.
@@ -11,7 +10,7 @@ inputs:
       You can choose the items you want to add to the fields at the time of notification.
       If you have more than one, please enter it in csv format.
       e.g. commit,repo
-    default: ""
+    default: ''
     required: false
   custom_payload:
     description: |
@@ -22,42 +21,42 @@ inputs:
     description: |
       Specify channel or here or `user_id`.
       refs: https://api.slack.com/reference/surfaces/formatting#mentioning-users
-    default: ""
+    default: ''
     required: false
   if_mention:
     description: |
       Specify success or failure or cancelled or custom or always.
       Multiple statuses can be specified in csv format.
       e.g. success,failure
-    default: ""
+    default: ''
     required: false
   author_name:
     description: User name for slack notification.
-    default: 8398a7@action-slack
+    default: h3y6e@action-slack
     required: false
   text:
     description: You can overwrite text.
-    default: ""
+    default: ''
     required: false
   username:
     description: override the legacy integration's default name.
-    default: ""
+    default: ''
     required: false
   icon_emoji:
     description: an emoji code string to use in place of the default icon.
-    default: ""
+    default: ''
     required: false
   icon_url:
     description: an icon image URL string to use in place of the default icon.
-    default: ""
+    default: ''
     required: false
   channel:
     description: override the legacy integration's default channel. This should be an ID, such as C8UJ12P4P.
-    default: ""
+    default: ''
     required: false
   job_name:
     description: Use this if you want to overwrite the job name.
-    default: ""
+    default: ''
     required: false
   success_message:
     description: Message to use when the status is 'success'.
@@ -77,7 +76,7 @@ inputs:
     default: ${{ github.token }}
   github_base_url:
     description: Specify if you want to use GitHub Enterprise.
-    default: ""
+    default: ''
     required: false
 runs:
   using: node20

@@ -12,8 +12,8 @@ fi
 echo start release flow
 
 # setup git
-git config user.name "8398a7"
-git config user.email "8398a7@gmail.com"
+git config user.name "h3y6e"
+git config user.email "h3y6e@users.noreply.github.com"
 
 tag=$(git diff HEAD~..HEAD -- package.json | grep version | tail -n 1 | cut -d'"' -f4)
 major=$(echo ${tag:0:1})

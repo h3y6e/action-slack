@@ -1,18 +1,23 @@
 # action-slack
 
-> Archived on 2025-09-13. This repository is no longer maintained. Issues and PRs are closed. Use at your own risk.
+You can notify Slack of GitHub Actions.
 
-## Status
-- Archived (read-only). No updates, fixes, or support will be provided.
+> This is a fork of [8398a7/action-slack](https://github.com/8398a7/action-slack), which was archived on 2025-09-13.
 
-## Alternatives
-- slackapi/slack-github-action (recommended)
-- Other maintained Slack notification actions
+## Usage
 
-## Migration Notes
-- Replace usages of `8398a7/action-slack@v3` with a maintained alternative.
-- If you must keep historical builds, pin to a specific commit in your workflows and acknowledge the lack of updates.
+See [action-slack documentation](https://action-slack.netlify.app/).
+
+```yaml
+- uses: h3y6e/action-slack@v3
+  with:
+    status: ${{ job.status }}
+    fields: repo,message,commit,author,action,eventName,ref,workflow,job,took
+  env:
+    SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+  if: always()
+```
 
 ## License
-- MIT (unchanged). Source remains available for reference.
 
+MIT

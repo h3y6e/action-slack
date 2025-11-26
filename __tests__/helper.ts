@@ -33,13 +33,13 @@ export const getTemplate: any = (
 export const setupNockCommit = (sha: string) =>
   nock('https://api.github.com')
     .persist()
-    .get(`/repos/8398a7/action-slack/commits/${sha}`)
+    .get(`/repos/h3y6e/action-slack/commits/${sha}`)
     .reply(200, () => getApiFixture('repos.commits.get'));
 
 export const setupNockJobs = (runId: string, fixture: string) =>
   nock('https://api.github.com')
     .persist()
-    .get(`/repos/8398a7/action-slack/actions/runs/${runId}/jobs`)
+    .get(`/repos/h3y6e/action-slack/actions/runs/${runId}/jobs`)
     .reply(200, () => {
       const obj = getApiFixture(fixture);
       const now = new Date();
@@ -106,7 +106,7 @@ export const repo = (): Field => {
   return {
     short: true,
     title: 'repo',
-    value: '<https://github.com/8398a7/action-slack|8398a7/action-slack>',
+    value: '<https://github.com/h3y6e/action-slack|h3y6e/action-slack>',
   };
 };
 
@@ -123,14 +123,14 @@ export const commit = (): Field => {
   return {
     short: true,
     title: 'commit',
-    value: `<https://github.com/8398a7/action-slack/commit/${
+    value: `<https://github.com/h3y6e/action-slack/commit/${
       process.env.GITHUB_SHA
     }|${process.env.GITHUB_SHA?.slice(0, 8)}>`,
   };
 };
 
 export const author = (): Field => {
-  return { short: true, title: 'author', value: '839 <8398a7@gmail.com>' };
+  return { short: true, title: 'author', value: 'heyhoe <h3y6e@pm.me>' };
 };
 
 export const eventName = (): Field => {
@@ -149,7 +149,7 @@ export const workflow = (sha?: string): Field => {
   return {
     short: true,
     title: 'workflow',
-    value: `<https://github.com/8398a7/action-slack/commit/${
+    value: `<https://github.com/h3y6e/action-slack/commit/${
       sha ?? process.env.GITHUB_SHA
     }/checks|${process.env.GITHUB_WORKFLOW as string}>`,
   };
@@ -159,7 +159,7 @@ export const workflowRun = (): Field => {
   return {
     short: true,
     title: 'workflowRun',
-    value: `<https://github.com/8398a7/action-slack/actions/runs/762195612|${
+    value: `<https://github.com/h3y6e/action-slack/actions/runs/762195612|${
       process.env.GITHUB_WORKFLOW as string
     }>`,
   };
@@ -169,7 +169,7 @@ export const action = (sha?: string): Field => {
   return {
     short: true,
     title: 'action',
-    value: `<https://github.com/8398a7/action-slack/commit/${
+    value: `<https://github.com/h3y6e/action-slack/commit/${
       sha ?? process.env.GITHUB_SHA
     }/checks|action>`,
   };
@@ -179,7 +179,7 @@ export const job = (): Field => {
   return {
     short: true,
     title: 'job',
-    value: `<https://github.com/8398a7/action-slack/runs/762195612|${process.env.GITHUB_JOB}>`,
+    value: `<https://github.com/h3y6e/action-slack/runs/762195612|${process.env.GITHUB_JOB}>`,
   };
 };
 
@@ -195,7 +195,7 @@ export const pullRequest = (): Field => {
   let value;
   if (context.eventName.startsWith('pull_request')) {
     value =
-      '<https://github.com/8398a7/action-slack/pull/123|Add pullRequest field &amp; escaping &lt;, &gt; #123>';
+      '<https://github.com/h3y6e/action-slack/pull/123|Add pullRequest field &amp; escaping &lt;, &gt; #123>';
   } else {
     value = 'n/a';
   }

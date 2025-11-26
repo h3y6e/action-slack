@@ -6,25 +6,25 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Succeeded
-        uses: 8398a7/action-slack@pre
+        uses: h3y6e/action-slack@pre
         with:
           status: Success
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL_FOR_INTEGRATION_TEST }}
       - name: Failed
-        uses: 8398a7/action-slack@pre
+        uses: h3y6e/action-slack@pre
         with:
           status: Failure
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL_FOR_INTEGRATION_TEST }}
       - name: Canceled
-        uses: 8398a7/action-slack@pre
+        uses: h3y6e/action-slack@pre
         with:
           status: Cancelled
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL_FOR_INTEGRATION_TEST }}
       - name: Legacy Webhook URL
-        uses: 8398a7/action-slack@pre
+        uses: h3y6e/action-slack@pre
         with:
           status: ${{ job.status }}
           username: legacy user
@@ -32,14 +32,14 @@ jobs:
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_LEGACY_WEBHOOK_URL_FOR_INTEGRATION_TEST }}
       - name: Custom Field
-        uses: 8398a7/action-slack@pre
+        uses: h3y6e/action-slack@pre
         with:
           status: custom
           custom_payload: |
             {
               text: "Custom Field Check",
               attachments: [{
-                "author_name": "8398a7@action-slack", // json
+                "author_name": "h3y6e@action-slack", // json
                 fallback: 'fallback',
                 color: 'good',
                 title: 'CI Result',
@@ -66,7 +66,7 @@ jobs:
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL_FOR_INTEGRATION_TEST }}
       - name: Custom Field2
-        uses: 8398a7/action-slack@pre
+        uses: h3y6e/action-slack@pre
         with:
           status: custom
           fields: workflow,job,commit,repo,ref,author,took
@@ -82,7 +82,7 @@ jobs:
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_LEGACY_WEBHOOK_URL_FOR_INTEGRATION_TEST }}
       - name: if_mention
-        uses: 8398a7/action-slack@pre
+        uses: h3y6e/action-slack@pre
         with:
           status: ${{ job.status }}
           mention: here
@@ -90,13 +90,13 @@ jobs:
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL_FOR_INTEGRATION_TEST }}
       - name: Fields Check
-        uses: 8398a7/action-slack@pre
+        uses: h3y6e/action-slack@pre
         with:
           status: ${{ job.status }}
           fields: repo,message,commit,author,job,eventName,ref,workflow,took
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL_FOR_INTEGRATION_TEST }}
-      - uses: 8398a7/action-slack@pre
+      - uses: h3y6e/action-slack@pre
         with:
           status: ${{ job.status }}
           fields: repo,message,job,took
@@ -108,7 +108,7 @@ jobs:
         os: [ubuntu-18.04, ubuntu-20.04]
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: 8398a7/action-slack@pre
+      - uses: h3y6e/action-slack@pre
         with:
           status: ${{ job.status }}
           fields: job,took
