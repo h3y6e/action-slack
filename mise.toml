@@ -1,0 +1,11 @@
+[settings]
+experimental = true
+
+[tools]
+node = "24.11.1"
+
+[hooks]
+postinstall = "npx corepack enable pnpm"
+
+[env]
+_.path = ["./node_modules/.bin"]
