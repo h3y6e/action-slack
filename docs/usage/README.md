@@ -1,14 +1,11 @@
----
-title: Usage
-weight: 1
----
+# Usage
 
 ```yaml
 steps:
-  - uses: 8398a7/action-slack@v3
+  - uses: h3y6e/action-slack@v3
     with:
       status: ${{ job.status }}
-      author_name: Integration Test # default: 8398a7@action-slack
+      author_name: Integration Test # default: h3y6e@action-slack
       fields: repo,commit,message,author # default: repo,commit
       mention: here
       if_mention: failure,cancelled
@@ -16,3 +13,6 @@ steps:
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }} # required
     if: always() # Pick up events even if the job fails or is canceled.
 ```
+
+- [With Parameters](./with.md)
+- [Fields](./fields.md)
