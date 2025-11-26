@@ -29,7 +29,7 @@ afterAll(() => {
 
 describe('job_name', () => {
   beforeEach(() => {
-    process.env.GITHUB_REPOSITORY = '8398a7/action-slack';
+    process.env.GITHUB_REPOSITORY = 'h3y6e/action-slack';
     process.env.GITHUB_EVENT_NAME = 'push';
     const github = require('@actions/github');
     github.context.payload = {};
@@ -59,7 +59,7 @@ describe('job_name', () => {
               short: true,
               title: 'job',
               value:
-                '<https://github.com/8398a7/action-slack/runs/762195612|Custom Job (ubuntu-18.04)>',
+                '<https://github.com/h3y6e/action-slack/runs/762195612|Custom Job (ubuntu-18.04)>',
             },
             { short: true, title: 'took', value: '1 hour 1 min 1 sec' },
           ],

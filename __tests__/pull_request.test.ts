@@ -66,7 +66,7 @@ describe.each`
     const sha = 'expected-sha-for-pull_request_event';
     github.context.payload = {
       pull_request: {
-        html_url: 'https://github.com/8398a7/action-slack/pull/123',
+        html_url: 'https://github.com/h3y6e/action-slack/pull/123',
         title: 'Add pullRequest field & escaping <, >',
         number: 123,
         head: { sha },
@@ -90,7 +90,7 @@ describe.each`
     payload.attachments[0].color = 'good';
     expect(await client.prepare(msg)).toStrictEqual(payload);
     expect(process.env.AS_PULL_REQUEST).toStrictEqual(
-      '<https://github.com/8398a7/action-slack/pull/123|Add pullRequest field &amp; escaping &lt;, &gt; #123>',
+      '<https://github.com/h3y6e/action-slack/pull/123|Add pullRequest field &amp; escaping &lt;, &gt; #123>',
     );
   });
 });

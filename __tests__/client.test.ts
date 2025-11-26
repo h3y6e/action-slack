@@ -32,9 +32,9 @@ afterAll(() => {
   nock.enableNetConnect();
 });
 
-describe('8398a7/action-slack', () => {
+describe('h3y6e/action-slack', () => {
   beforeEach(() => {
-    process.env.GITHUB_REPOSITORY = '8398a7/action-slack';
+    process.env.GITHUB_REPOSITORY = 'h3y6e/action-slack';
     process.env.GITHUB_EVENT_NAME = 'push';
     process.env.https_proxy = 'http://localhost:1334';
     process.env.HTTPS_PROXY = 'http://localhost:1334';
@@ -579,8 +579,8 @@ describe('8398a7/action-slack', () => {
 \${process.env.AS_JOB} (\${process.env.AS_COMMIT}) of \${process.env.AS_REPO}@master by \${process.env.AS_AUTHOR} succeeded in \${process.env.AS_TOOK}\`
           }`),
       ).toStrictEqual({
-        text: `<https://github.com/8398a7/action-slack/commit/b24f03a32e093fe8d55e23cfd0bb314069633b2f/checks|PR Checks>
-<https://github.com/8398a7/action-slack/runs/762195612|notification> (<https://github.com/8398a7/action-slack/commit/b24f03a32e093fe8d55e23cfd0bb314069633b2f|b24f03a3>) of <https://github.com/8398a7/action-slack|8398a7/action-slack>@master by 839 <8398a7@gmail.com> succeeded in 1 hour 1 min 1 sec`,
+        text: `<https://github.com/h3y6e/action-slack/commit/b24f03a32e093fe8d55e23cfd0bb314069633b2f/checks|PR Checks>
+<https://github.com/h3y6e/action-slack/runs/762195612|notification> (<https://github.com/h3y6e/action-slack/commit/b24f03a32e093fe8d55e23cfd0bb314069633b2f|b24f03a3>) of <https://github.com/h3y6e/action-slack|h3y6e/action-slack>@master by heyhoe <h3y6e@pm.me> succeeded in 1 hour 1 min 1 sec`,
       });
     });
   });

@@ -29,7 +29,7 @@ afterAll(() => {
 
 describe('MATRIX_CONTEXT', () => {
   beforeEach(() => {
-    process.env.GITHUB_REPOSITORY = '8398a7/action-slack';
+    process.env.GITHUB_REPOSITORY = 'h3y6e/action-slack';
     process.env.GITHUB_EVENT_NAME = 'push';
     const github = require('@actions/github');
     github.context.payload = {};
