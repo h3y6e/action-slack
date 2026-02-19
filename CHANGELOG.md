@@ -1,5 +1,12 @@
 # Changelog
 
+## [v4.0.4](https://github.com/h3y6e/action-slack/compare/v4.0.3...v4.0.4) - 2026-02-19
+- fix: update documentation links to GitHub Pages by @h3y6e in https://github.com/h3y6e/action-slack/pull/31
+- chore(deps): pin dependencies by @renovate[bot] in https://github.com/h3y6e/action-slack/pull/27
+- ci: add e2e test workflow and Slack notifications to CI pipelines by @h3y6e in https://github.com/h3y6e/action-slack/pull/33
+- test: expand test coverage and add v8 coverage reporting by @h3y6e in https://github.com/h3y6e/action-slack/pull/34
+- ci: Split e2e jobs by @h3y6e in https://github.com/h3y6e/action-slack/pull/38
+
 ## [v4.0.3](https://github.com/h3y6e/action-slack/compare/v4.0.2...v4.0.3) - 2026-02-19
 - fix: add GitHub Pages documentation site with Jekyll by @h3y6e in https://github.com/h3y6e/action-slack/pull/24
 - ci: use ubuntu-latest runner for docs build workflow by @h3y6e in https://github.com/h3y6e/action-slack/pull/26
