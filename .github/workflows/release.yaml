@@ -15,6 +15,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v6
-      - uses: haya14busa/action-update-semver@v1
+      - uses: haya14busa/action-update-semver@7d2c558640ea49e798d46539536190aff8c18715 # v1.5.1
         with:
           major_version_tag_only: true
