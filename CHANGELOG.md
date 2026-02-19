@@ -1,5 +1,9 @@
 # Changelog
 
+## [v4.0.3](https://github.com/h3y6e/action-slack/compare/v4.0.2...v4.0.3) - 2026-02-19
+- fix: add GitHub Pages documentation site with Jekyll by @h3y6e in https://github.com/h3y6e/action-slack/pull/24
+- ci: use ubuntu-latest runner for docs build workflow by @h3y6e in https://github.com/h3y6e/action-slack/pull/26
+
 ## [v4.0.2](https://github.com/h3y6e/action-slack/compare/v4.0.1...v4.0.2) - 2026-02-19
 - ci: centralize mise and pnpm setup into a reusable composite action by @h3y6e in https://github.com/h3y6e/action-slack/pull/21
 - fix: switch tagpr to draft releases and qualify action name by @h3y6e in https://github.com/h3y6e/action-slack/pull/23
