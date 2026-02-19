@@ -1,3 +1,6 @@
+#:tombi schema.strict = false
+#:schema https://mise.jdx.dev/schema/mise.json
+
 [settings]
 experimental = true
 
@@ -9,3 +12,6 @@ postinstall = "npx corepack enable pnpm"
 
 [env]
 _.path = ["./node_modules/.bin"]
+
+[tasks.prerelease]
+run = "pnpm run build && git add dist/"

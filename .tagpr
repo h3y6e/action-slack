@@ -3,4 +3,4 @@
 	versionFile = package.json
 	vPrefix = true
 	changelog = true
-	command = pnpm run build
+	command = mise run prerelease
