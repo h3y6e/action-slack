@@ -1,6 +1,6 @@
 {
   "name": "action-slack",
-  "version": "4.0.2",
+  "version": "4.0.3",
   "description": "You can notify slack of GitHub Actions.",
   "keywords": [
     "actions",
