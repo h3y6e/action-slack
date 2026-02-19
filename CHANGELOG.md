@@ -1,5 +1,11 @@
 # Changelog
 
+## [v4.0.2](https://github.com/h3y6e/action-slack/compare/v4.0.1...v4.0.2) - 2026-02-19
+- ci: centralize mise and pnpm setup into a reusable composite action by @h3y6e in https://github.com/h3y6e/action-slack/pull/21
+- fix: switch tagpr to draft releases and qualify action name by @h3y6e in https://github.com/h3y6e/action-slack/pull/23
+- chore(deps): update haya14busa/action-update-semver action to v1.5.1 by @renovate[bot] in https://github.com/h3y6e/action-slack/pull/17
+- chore(deps): update songmu/tagpr action to v1.15.0 by @renovate[bot] in https://github.com/h3y6e/action-slack/pull/19
+
 ## [v4.0.1](https://github.com/h3y6e/action-slack/compare/v4.0.0...v4.0.1) - 2026-02-19
 - chore: update ignorePatterns in .oxfmtrc.json by @h3y6e in https://github.com/h3y6e/action-slack/pull/15
 - fix: use GitHub App token in tagpr workflow by @h3y6e in https://github.com/h3y6e/action-slack/pull/14
