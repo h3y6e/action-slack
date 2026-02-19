@@ -1,8 +1,9 @@
-import { vi, describe, it, expect, beforeEach } from 'vitest';
+import { vi, describe, it, expect, beforeEach, afterEach } from 'vitest';
 import { Client, Success, Failure, Cancelled } from './client';
 import type { With } from './client';
 
 const mockSend = vi.hoisted(() => vi.fn().mockResolvedValue(undefined));
+const mockIncomingWebhookConstructor = vi.hoisted(() => vi.fn());
 
 vi.mock('@actions/core', () => ({
   debug: vi.fn(),
@@ -12,7 +13,7 @@ vi.mock('@actions/core', () => ({
 vi.mock('@actions/github', () => ({
   context: {
     job: 'test-job',
-    repo: { owner: 'owner', repo: 'repo' },
+    repo: { owner: 'h3y6e', repo: 'test' },
     sha: 'abc123def456',
     ref: 'refs/heads/main',
     workflow: 'Test Workflow',
@@ -31,6 +32,9 @@ vi.mock('@actions/github', () => ({
 
 vi.mock('@slack/webhook', () => ({
   IncomingWebhook: class {
+    constructor(...args: unknown[]) {
+      mockIncomingWebhookConstructor(...args);
+    }
     send = mockSend;
   },
 }));
@@ -70,6 +74,7 @@ describe('Client', () => {
   beforeEach(() => {
     vi.clearAllMocks();
     mockSend.mockResolvedValue(undefined);
+    mockIncomingWebhookConstructor.mockReset();
   });
 
   describe('Webhook URL validation', () => {
@@ -265,6 +270,142 @@ describe('Client', () => {
         '{ text: "t", attachments: [{ color: "good" }] }',
       );
       expect(result).toEqual({ text: 't', attachments: [{ color: 'good' }] });
+    });
+  });
+
+  describe('Constructor defaults', () => {
+    it('does not throw when fields input is empty', () => {
+      expect(() => createClient({ fields: '' })).not.toThrow();
+    });
+  });
+
+  describe('Job name resolution', () => {
+    let originalMatrixContext: string | undefined;
+
+    beforeEach(() => {
+      originalMatrixContext = process.env.MATRIX_CONTEXT;
+    });
+
+    afterEach(() => {
+      if (originalMatrixContext === undefined) {
+        delete process.env.MATRIX_CONTEXT;
+      } else {
+        process.env.MATRIX_CONTEXT = originalMatrixContext;
+      }
+    });
+
+    it('appends matrix values to job name when MATRIX_CONTEXT is set', () => {
+      process.env.MATRIX_CONTEXT = JSON.stringify({ os: 'ubuntu', node: '18' });
+      const client = createClient({ job_name: '' });
+      expect((client as any).jobName).toBe('test-job (ubuntu, 18)');
+    });
+
+    it('uses context.job when job_name is empty and no matrix', () => {
+      delete process.env.MATRIX_CONTEXT;
+      const client = createClient({ job_name: '' });
+      expect((client as any).jobName).toBe('test-job');
+    });
+
+    it('uses custom job_name when provided', () => {
+      const client = createClient({ job_name: 'my-job' });
+      expect((client as any).jobName).toBe('my-job');
+    });
+
+    it('ignores MATRIX_CONTEXT when its value is "null"', () => {
+      process.env.MATRIX_CONTEXT = 'null';
+      const client = createClient({ job_name: '' });
+      expect((client as any).jobName).toBe('test-job');
+    });
+
+    it('returns base name when MATRIX_CONTEXT is an empty object', () => {
+      process.env.MATRIX_CONTEXT = '{}';
+      const client = createClient({ job_name: '' });
+      expect((client as any).jobName).toBe('test-job');
+    });
+  });
+
+  describe('if_mention with CSV statuses', () => {
+    it('mentions when status is in the CSV list', () => {
+      const client = createClient({
+        mention: 'user1',
+        if_mention: 'success,failure',
+      });
+      expect(client.mentionText(Success)).toBe('<@user1> ');
+      expect(client.mentionText(Failure)).toBe('<@user1> ');
+    });
+
+    it('does not mention when status is not in the CSV list', () => {
+      const client = createClient({
+        mention: 'user1',
+        if_mention: 'success,failure',
+      });
+      expect(client.mentionText(Cancelled)).toBe('');
+    });
+  });
+
+  describe('Payload includes author_name', () => {
+    it('includes author_name in the attachment', async () => {
+      const client = createClient({ author_name: 'deploy-bot' });
+      const payload = await client.prepare('');
+      expect(payload.attachments[0].author_name).toBe('deploy-bot');
+    });
+  });
+
+  describe('Proxy configuration', () => {
+    let originalHttpsProxy: string | undefined;
+    let originalHTTPSProxy: string | undefined;
+
+    beforeEach(() => {
+      originalHttpsProxy = process.env.https_proxy;
+      originalHTTPSProxy = process.env.HTTPS_PROXY;
+    });
+
+    afterEach(() => {
+      if (originalHttpsProxy === undefined) {
+        delete process.env.https_proxy;
+      } else {
+        process.env.https_proxy = originalHttpsProxy;
+      }
+      if (originalHTTPSProxy === undefined) {
+        delete process.env.HTTPS_PROXY;
+      } else {
+        process.env.HTTPS_PROXY = originalHTTPSProxy;
+      }
+    });
+
+    it('creates client without error when https_proxy is set', () => {
+      process.env.https_proxy = 'http://proxy:8080';
+      expect(() => createClient()).not.toThrow();
+    });
+
+    it('passes an agent option to IncomingWebhook when https_proxy is set', () => {
+      process.env.https_proxy = 'http://proxy:8080';
+      createClient();
+      expect(mockIncomingWebhookConstructor).toHaveBeenCalledOnce();
+      const options = mockIncomingWebhookConstructor.mock.calls[0][1];
+      expect(options?.agent).toBeDefined();
+    });
+
+    it('creates client without error when HTTPS_PROXY is set', () => {
+      process.env.HTTPS_PROXY = 'http://proxy:8080';
+      expect(() => createClient()).not.toThrow();
+    });
+
+    it('passes an agent option to IncomingWebhook when HTTPS_PROXY is set', () => {
+      process.env.HTTPS_PROXY = 'http://proxy:8080';
+      createClient();
+      expect(mockIncomingWebhookConstructor).toHaveBeenCalledOnce();
+      const options = mockIncomingWebhookConstructor.mock.calls[0][1];
+      expect(options?.agent).toBeDefined();
+    });
+
+    it('does not pass an agent option when no proxy env var is set', () => {
+      delete process.env.https_proxy;
+      delete process.env.HTTPS_PROXY;
+      createClient();
+      expect(mockIncomingWebhookConstructor).toHaveBeenCalledOnce();
+      const options = mockIncomingWebhookConstructor.mock.calls[0][1];
+      expect(options?.agent).toBeUndefined();
     });
   });
 });
