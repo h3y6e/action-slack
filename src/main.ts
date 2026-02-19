@@ -13,7 +13,6 @@ async function run(): Promise<void> {
     const icon_url = core.getInput('icon_url');
     const channel = core.getInput('channel');
     const custom_payload = core.getInput('custom_payload');
-    const payload = core.getInput('payload');
     const fields = core.getInput('fields');
     const job_name = core.getInput('job_name');
     const success_message = core.getInput('success_message');
@@ -32,7 +31,6 @@ async function run(): Promise<void> {
     core.debug(`icon_url: ${icon_url}`);
     core.debug(`channel: ${channel}`);
     core.debug(`custom_payload: ${custom_payload}`);
-    core.debug(`payload: ${payload}`);
     core.debug(`fields: ${fields}`);
     core.debug(`job_name: ${job_name}`);
     core.debug(`success_message: ${success_message}`);
