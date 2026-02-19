@@ -3,3 +3,4 @@
 	versionFile = package.json
 	vPrefix = true
 	changelog = true
+	command = pnpm run build

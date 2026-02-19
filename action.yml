@@ -80,7 +80,7 @@ inputs:
     required: false
 runs:
   using: node24
-  main: dist/main.mjs
+  main: dist/index.mjs
 branding:
   icon: bell
   color: blue
