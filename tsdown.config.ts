@@ -1,13 +1,14 @@
 import { defineConfig } from 'tsdown';
 
 export default defineConfig({
-  entry: ['src/main.ts'],
+  entry: { index: 'src/main.ts' },
   outDir: 'dist',
   format: 'esm',
   platform: 'node',
-  target: 'node24',
+  target: false,
   clean: true,
   minify: true,
+  treeshake: true,
   noExternal: [/.*/],
   inlineOnly: false,
 });
