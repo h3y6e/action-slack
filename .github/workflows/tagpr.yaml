@@ -26,8 +26,7 @@ jobs:
         with:
           token: ${{ steps.app-token.outputs.token }}
           persist-credentials: false
-      - uses: jdx/mise-action@v3
-      - run: pnpm install --frozen-lockfile
+      - uses: ./.github/actions/setup
       - uses: Songmu/tagpr@v1
         env:
           GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
