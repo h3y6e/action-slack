@@ -1,5 +1,9 @@
 # Changelog
 
+## [v4.0.1](https://github.com/h3y6e/action-slack/compare/v4.0.0...v4.0.1) - 2026-02-19
+- chore: update ignorePatterns in .oxfmtrc.json by @h3y6e in https://github.com/h3y6e/action-slack/pull/15
+- fix: use GitHub App token in tagpr workflow by @h3y6e in https://github.com/h3y6e/action-slack/pull/14
+
 ## [v4.0.0](https://github.com/h3y6e/action-slack/commits/v4.0.0) - 2026-02-19
 - Take over fork maintenance from 8398a7 by @h3y6e in https://github.com/h3y6e/action-slack/pull/1
 - fix: migrate from npm to pnpm with mise for runtime management by @h3y6e in https://github.com/h3y6e/action-slack/pull/2
