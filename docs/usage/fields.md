@@ -67,8 +67,8 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [macos-latest, windows-latest, ubuntu-18.04]
-        node: [8, 10, 12, 14]
+        os: [macos-latest, windows-latest, ubuntu-latest]
+        node: [18, 20, 22, 24]
         include:
           - os: windows-latest
             node: 8
