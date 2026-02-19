@@ -13,7 +13,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  e2e:
+  basic-test:
     runs-on: ubuntu-slim
     timeout-minutes: 10
     steps:
@@ -28,6 +28,7 @@ jobs:
           status: success
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      - run: sleep 1
 
       - name: status - failure
         uses: ./
@@ -35,6 +36,7 @@ jobs:
           status: failure
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      - run: sleep 1
 
       - name: status - cancelled
         uses: ./
@@ -42,6 +44,7 @@ jobs:
           status: cancelled
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      - run: sleep 1
 
       - name: status - custom (basic)
         uses: ./
@@ -77,6 +80,7 @@ jobs:
             }
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      - run: sleep 1
 
       - name: status - custom with AS_* env vars
         uses: ./
@@ -92,6 +96,7 @@ jobs:
             }
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      - run: sleep 1
 
       - name: status - job.status
         uses: ./
@@ -99,6 +104,7 @@ jobs:
           status: ${{ job.status }}
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      - run: sleep 1
 
       # -- fields patterns --
       - name: fields - default (repo,commit)
@@ -107,6 +113,7 @@ jobs:
           status: success
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      - run: sleep 1
 
       - name: fields - all
         uses: ./
@@ -115,6 +122,7 @@ jobs:
           fields: all
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      - run: sleep 1
 
       - name: fields - each field individually
         uses: ./
@@ -123,6 +131,7 @@ jobs:
           fields: repo,commit,message,author,action,eventName,ref,workflow,workflowRun,pullRequest
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      - run: sleep 1
 
       - name: fields - job and took
         uses: ./
@@ -131,6 +140,7 @@ jobs:
           fields: job,took
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      - run: sleep 1
 
       # -- mention patterns --
       - name: mention - here on failure
@@ -141,6 +151,7 @@ jobs:
           if_mention: failure
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      - run: sleep 1
 
       - name: mention - channel on failure
         uses: ./
@@ -150,6 +161,7 @@ jobs:
           if_mention: failure
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      - run: sleep 1
 
       - name: mention - if_mention csv (failure,cancelled)
         uses: ./
@@ -159,6 +171,7 @@ jobs:
           if_mention: failure,cancelled
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      - run: sleep 1
 
       - name: mention - if_mention always
         uses: ./
@@ -168,6 +181,7 @@ jobs:
           if_mention: always
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      - run: sleep 1
 
       - name: mention - no mention when if_mention does not match
         uses: ./
@@ -177,6 +191,7 @@ jobs:
           if_mention: failure
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      - run: sleep 1
 
       # -- with parameter patterns --
       - name: with - text override
@@ -186,6 +201,7 @@ jobs:
           text: 'E2E: custom text override'
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      - run: sleep 1
 
       - name: with - author_name
         uses: ./
@@ -194,6 +210,7 @@ jobs:
           author_name: e2e@action-slack
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      - run: sleep 1
 
       - name: with - username and icon_emoji
         uses: ./
@@ -203,6 +220,7 @@ jobs:
           icon_emoji: ':test_tube:'
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      - run: sleep 1
 
       - name: with - icon_url
         uses: ./
@@ -211,6 +229,7 @@ jobs:
           icon_url: 'https://github.githubassets.com/favicons/favicon.png'
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      - run: sleep 1
 
       - name: with - success_message / failure_message / cancelled_message
         uses: ./
@@ -220,7 +239,17 @@ jobs:
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
 
-      # -- job_name patterns --
+  # -- job_name patterns --
+  jobname-test:
+    needs: basic-test
+    name: Custom Job Name
+    runs-on: ubuntu-slim
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v6
+      - uses: ./.github/actions/setup
+      - run: pnpm run build
+
       - name: job_name - overwrite
         uses: ./
         with:
@@ -229,9 +258,29 @@ jobs:
           fields: job,took
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      - run: sleep 1
+
+      - name: job_name - without job_name (should show "Job is not found")
+        uses: ./
+        with:
+          status: success
+          fields: job,took
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      - run: sleep 1
+
+      - name: job_name - wrong name (should show "Job is not found")
+        uses: ./
+        with:
+          status: success
+          job_name: Non Existent Job
+          fields: job,took
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
 
   # -- matrix patterns --
-  matrix:
+  matrix-test:
+    needs: jobname-test
     runs-on: ubuntu-slim
     timeout-minutes: 10
     strategy:
