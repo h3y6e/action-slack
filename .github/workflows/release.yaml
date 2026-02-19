@@ -18,3 +18,17 @@ jobs:
       - uses: haya14busa/action-update-semver@7d2c558640ea49e798d46539536190aff8c18715 # v1.5.1
         with:
           major_version_tag_only: true
+
+  notify:
+    needs: update-semver
+    runs-on: ubuntu-slim
+    timeout-minutes: 5
+
+    steps:
+      - uses: h3y6e/action-slack@v4
+        with:
+          status: ${{ needs.update-semver.result }}
+          text: 'Released ${{ github.ref_name }}'
+          fields: repo,commit
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}

@@ -1,0 +1,251 @@
+name: e2e
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - .github/workflows/e2e.yaml
+      - src/**
+      - package.json
+      - pnpm-lock.yaml
+      - tsdown.config.ts
+  workflow_dispatch:
+
+jobs:
+  e2e:
+    runs-on: ubuntu-slim
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v6
+      - uses: ./.github/actions/setup
+      - run: pnpm run build
+
+      # -- status patterns --
+      - name: status - success
+        uses: ./
+        with:
+          status: success
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+
+      - name: status - failure
+        uses: ./
+        with:
+          status: failure
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+
+      - name: status - cancelled
+        uses: ./
+        with:
+          status: cancelled
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+
+      - name: status - custom (basic)
+        uses: ./
+        with:
+          status: custom
+          custom_payload: |
+            {
+              text: "E2E: custom payload",
+              attachments: [{
+                "author_name": "h3y6e@action-slack",
+                fallback: 'fallback',
+                color: 'good',
+                title: 'CI Result',
+                text: 'Succeeded',
+                fields: [{
+                  title: 'lower case',
+                  value: 'LOWER CASE CHECK'.toLowerCase(),
+                  short: true
+                },
+                {
+                  title: 'reverse',
+                  value: 'gnirts esrever'.split('').reverse().join(''),
+                  short: true
+                },
+                {
+                  title: 'long title',
+                  value: 'long value',
+                  short: false
+                }],
+                actions: [{
+                }]
+              }]
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+
+      - name: status - custom with AS_* env vars
+        uses: ./
+        with:
+          status: custom
+          fields: workflow,job,commit,repo,ref,author,took
+          custom_payload: |
+            {
+              attachments: [{
+                color: 'good',
+                text: `${process.env.AS_WORKFLOW}\n${process.env.AS_JOB} (${process.env.AS_COMMIT}) of ${process.env.AS_REPO}@${process.env.AS_REF} by ${process.env.AS_AUTHOR} in ${process.env.AS_TOOK}`,
+              }]
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+
+      - name: status - job.status
+        uses: ./
+        with:
+          status: ${{ job.status }}
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+
+      # -- fields patterns --
+      - name: fields - default (repo,commit)
+        uses: ./
+        with:
+          status: success
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+
+      - name: fields - all
+        uses: ./
+        with:
+          status: success
+          fields: all
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+
+      - name: fields - each field individually
+        uses: ./
+        with:
+          status: success
+          fields: repo,commit,message,author,action,eventName,ref,workflow,workflowRun,pullRequest
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+
+      - name: fields - job and took
+        uses: ./
+        with:
+          status: success
+          fields: job,took
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+
+      # -- mention patterns --
+      - name: mention - here on failure
+        uses: ./
+        with:
+          status: failure
+          mention: here
+          if_mention: failure
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+
+      - name: mention - channel on failure
+        uses: ./
+        with:
+          status: failure
+          mention: channel
+          if_mention: failure
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+
+      - name: mention - if_mention csv (failure,cancelled)
+        uses: ./
+        with:
+          status: failure
+          mention: here
+          if_mention: failure,cancelled
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+
+      - name: mention - if_mention always
+        uses: ./
+        with:
+          status: success
+          mention: here
+          if_mention: always
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+
+      - name: mention - no mention when if_mention does not match
+        uses: ./
+        with:
+          status: success
+          mention: here
+          if_mention: failure
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+
+      # -- with parameter patterns --
+      - name: with - text override
+        uses: ./
+        with:
+          status: success
+          text: 'E2E: custom text override'
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+
+      - name: with - author_name
+        uses: ./
+        with:
+          status: success
+          author_name: e2e@action-slack
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+
+      - name: with - username and icon_emoji
+        uses: ./
+        with:
+          status: success
+          username: e2e-bot
+          icon_emoji: ':test_tube:'
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+
+      - name: with - icon_url
+        uses: ./
+        with:
+          status: success
+          icon_url: 'https://github.githubassets.com/favicons/favicon.png'
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+
+      - name: with - success_message / failure_message / cancelled_message
+        uses: ./
+        with:
+          status: success
+          success_message: ":tada: E2E custom success message\n"
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+
+      # -- job_name patterns --
+      - name: job_name - overwrite
+        uses: ./
+        with:
+          status: success
+          job_name: Custom Job Name
+          fields: job,took
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+
+  # -- matrix patterns --
+  matrix:
+    runs-on: ubuntu-slim
+    timeout-minutes: 10
+    strategy:
+      matrix:
+        version: [1, 2]
+    steps:
+      - uses: actions/checkout@v6
+      - uses: ./.github/actions/setup
+      - run: pnpm run build
+
+      - uses: ./
+        with:
+          status: success
+          fields: repo,job,took
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          MATRIX_CONTEXT: ${{ toJson(matrix) }}
