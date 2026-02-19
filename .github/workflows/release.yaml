@@ -1,0 +1,20 @@
+name: release
+
+on:
+  push:
+    tags:
+      - 'v[0-9]+.[0-9]+.[0-9]+'
+
+permissions:
+  contents: write
+
+jobs:
+  update-semver:
+    runs-on: ubuntu-slim
+    timeout-minutes: 5
+
+    steps:
+      - uses: actions/checkout@v6
+      - uses: haya14busa/action-update-semver@v1
+        with:
+          major_version_tag_only: true
