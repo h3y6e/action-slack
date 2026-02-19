@@ -1,0 +1,25 @@
+title: action-slack
+description: You can notify slack of GitHub Actions.
+url: https://h3y6e.github.io
+baseurl: /action-slack
+
+theme: jekyll-theme-minimal
+
+plugins:
+  - jekyll-optional-front-matter
+  - jekyll-relative-links
+  - jekyll-readme-index
+  - jekyll-default-layout
+
+relative_links:
+  enabled: true
+  collections: true
+
+readme_index:
+  with_frontmatter: true
+
+defaults:
+  - scope:
+      path: ''
+    values:
+      layout: default
