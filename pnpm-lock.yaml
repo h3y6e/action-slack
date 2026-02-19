@@ -25,28 +25,28 @@ importers:
         version: 7.7.4
     devDependencies:
       '@types/node':
-        specifier: ^25.2.3
+        specifier: 25.2.3
         version: 25.2.3
       '@types/semver':
-        specifier: ^7.7.1
+        specifier: 7.7.1
         version: 7.7.1
       oxfmt:
-        specifier: ~0.33.0
+        specifier: 0.33.0
         version: 0.33.0
       oxlint:
-        specifier: ~1.48.0
+        specifier: 1.48.0
         version: 1.48.0(oxlint-tsgolint@0.14.0)
       oxlint-tsgolint:
-        specifier: ~0.14.0
+        specifier: 0.14.0
         version: 0.14.0
       tsdown:
-        specifier: ~0.20.3
+        specifier: 0.20.3
         version: 0.20.3(typescript@5.9.3)
       typescript:
-        specifier: ^5.9.3
+        specifier: 5.9.3
         version: 5.9.3
       vitest:
-        specifier: ~4.0.18
+        specifier: 4.0.18
         version: 4.0.18(@types/node@25.2.3)
 
 packages:
