@@ -25,7 +25,7 @@ Recommend `${{ job.status }}`.
 
 ```yaml
 steps:
-  - uses: h3y6e/action-slack@v3
+  - uses: h3y6e/action-slack@v4
     with:
       status: ${{ job.status }}
     env:
@@ -38,7 +38,7 @@ e.g.
 
 ```yaml
 steps:
-  - uses: h3y6e/action-slack@v3
+  - uses: h3y6e/action-slack@v4
     with:
       text: 'any string'
     env:
@@ -51,7 +51,7 @@ e.g.
 
 ```yaml
 steps:
-  - uses: h3y6e/action-slack@v3
+  - uses: h3y6e/action-slack@v4
     with:
       author_name: 'my workflow'
     env:
@@ -64,7 +64,7 @@ This can be mentioned in combination with `if_mention`.
 
 ```yaml
 steps:
-  - uses: h3y6e/action-slack@v3
+  - uses: h3y6e/action-slack@v4
     with:
       mention: 'here'
       if_mention: failure
@@ -76,7 +76,7 @@ If you want to mention multiple users in multiple cases, you can specify.
 
 ```yaml
 steps:
-  - uses: h3y6e/action-slack@v3
+  - uses: h3y6e/action-slack@v4
     with:
       mention: 'user_id,user_id2'
       if_mention: 'failure,cancelled'
@@ -88,7 +88,7 @@ If you want to mention a user group, you need to add "subteam^" before user grou
 
 ```yaml
 steps:
-  - uses: h3y6e/action-slack@v3
+  - uses: h3y6e/action-slack@v4
     with:
       mention: 'subteam^S012ABC3Y4Z' # replace S012ABC3Y4Z with your user group id
       if_mention: 'failure,cancelled'
@@ -102,7 +102,7 @@ Only legacy incoming webhook supported.
 
 ```yaml
 steps:
-  - uses: h3y6e/action-slack@v3
+  - uses: h3y6e/action-slack@v4
     with:
       username: 'my workflow bot'
     env:
@@ -115,7 +115,7 @@ Only legacy incoming webhook supported.
 
 ```yaml
 steps:
-  - uses: h3y6e/action-slack@v3
+  - uses: h3y6e/action-slack@v4
     with:
       icon_emoji: ':octocat:'
     env:
@@ -128,7 +128,7 @@ Only legacy incoming webhook supported.
 
 ```yaml
 steps:
-  - uses: h3y6e/action-slack@v3
+  - uses: h3y6e/action-slack@v4
     with:
       icon_url: 'http://example.com/hoge.png'
     env:
@@ -141,7 +141,7 @@ Only legacy incoming webhook supported.
 
 ```yaml
 steps:
-  - uses: h3y6e/action-slack@v3
+  - uses: h3y6e/action-slack@v4
     with:
       channel: '#general'
     env:
@@ -152,7 +152,7 @@ steps:
 
 ```yaml
 steps:
-  - uses: h3y6e/action-slack@v3
+  - uses: h3y6e/action-slack@v4
     with:
       status: custom
       custom_payload: |
@@ -206,7 +206,7 @@ jobs:
     name: Test
     runs-on: ubuntu-latest
     steps:
-      - uses: h3y6e/action-slack@v3
+      - uses: h3y6e/action-slack@v4
         with:
           job_name: Test # Match the name above.
           fields: job,took

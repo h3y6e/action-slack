@@ -8,7 +8,7 @@ Use `status: custom` and [custom_payload](../usage/with.md#custom_payload) to cu
 
 ```yaml
 steps:
-  - uses: h3y6e/action-slack@v3
+  - uses: h3y6e/action-slack@v4
     with:
       status: custom
       custom_payload: |
@@ -48,7 +48,7 @@ We have even more options for those who want to use custom notifications, but wa
 
 ```yaml
 steps:
-  - uses: h3y6e/action-slack@v3
+  - uses: h3y6e/action-slack@v4
     with:
       status: custom
       fields: workflow,job,commit,repo,ref,author,took

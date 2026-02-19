@@ -2,7 +2,7 @@
 
 ```yaml
 steps:
-  - uses: h3y6e/action-slack@v3
+  - uses: h3y6e/action-slack@v4
     with:
       status: ${{ job.status }}
       author_name: Integration Test # default: h3y6e@action-slack
