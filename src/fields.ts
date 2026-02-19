@@ -267,8 +267,7 @@ export class FieldFactory {
 function createAttachment(
   title: string,
   value: string,
-  short?: boolean,
+  short: boolean = true,
 ): Field | undefined {
-  if (short === undefined) short = true;
   return { title, value, short };
 }

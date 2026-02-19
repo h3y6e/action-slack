@@ -24,7 +24,8 @@
     "format": "oxfmt --write",
     "format:check": "oxfmt --check",
     "typecheck": "tsc --noEmit",
-    "test": "vitest run"
+    "test": "vitest run",
+    "test:coverage": "vitest run --coverage"
   },
   "dependencies": {
     "@actions/core": "^3.0.0",
@@ -36,6 +37,7 @@
   "devDependencies": {
     "@types/node": "25.2.3",
     "@types/semver": "7.7.1",
+    "@vitest/coverage-v8": "4.0.18",
     "oxfmt": "0.33.0",
     "oxlint": "1.48.0",
     "oxlint-tsgolint": "0.14.0",
