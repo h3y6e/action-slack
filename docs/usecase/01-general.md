@@ -4,7 +4,7 @@ Notify slack of the results of a single job run.
 
 ```yaml
 steps:
-  - uses: h3y6e/action-slack@v3
+  - uses: h3y6e/action-slack@v4
     with:
       status: ${{ job.status }}
       fields: repo,message,commit,author,action,eventName,ref,workflow,job,took,pullRequest # selectable (default: repo,message)

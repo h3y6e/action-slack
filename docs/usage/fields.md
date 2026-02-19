@@ -6,7 +6,7 @@
 
 ```yaml
 steps:
-  - uses: h3y6e/action-slack@v3
+  - uses: h3y6e/action-slack@v4
     with:
       fields: job,took
     env:
@@ -35,7 +35,7 @@ Corresponding types are as follows.
 
 ```yaml
 steps:
-  - uses: h3y6e/action-slack@v3
+  - uses: h3y6e/action-slack@v4
     with:
       fields: repo,commit
     env:
@@ -46,7 +46,7 @@ If you want all items, specify `all`.
 
 ```yaml
 steps:
-  - uses: h3y6e/action-slack@v3
+  - uses: h3y6e/action-slack@v4
     with:
       fields: all
     env:
@@ -75,7 +75,7 @@ jobs:
             npm: 6
 
     steps:
-      - uses: h3y6e/action-slack@v3
+      - uses: h3y6e/action-slack@v4
         with:
           job_name: test (${{ matrix.os }}, ${{ matrix.node }}) # named without `npm`
           fields: job,took

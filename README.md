@@ -9,7 +9,7 @@ You can notify Slack of GitHub Actions.
 See [documentation](./docs/).
 
 ```yaml
-- uses: h3y6e/action-slack@v3
+- uses: h3y6e/action-slack@v4
   with:
     status: ${{ job.status }}
     fields: repo,message,commit,author,action,eventName,ref,workflow,job,took
