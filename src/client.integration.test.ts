@@ -17,26 +17,19 @@ import {
   afterEach,
   afterAll,
 } from 'vitest';
-import { readFileSync } from 'node:fs';
-import { join } from 'node:path';
 import { MockAgent, setGlobalDispatcher, getGlobalDispatcher } from 'undici';
 import type { Dispatcher } from 'undici';
 import { setupServer } from 'msw/node';
 import { http, HttpResponse } from 'msw';
-
-const fixturesDir = join(import.meta.dirname, '__fixtures__');
-const commitFixture = JSON.parse(
-  readFileSync(join(fixturesDir, 'repos.commits.get.json'), 'utf-8'),
-);
-const jobsFixture = JSON.parse(
-  readFileSync(join(fixturesDir, 'actions.runs.jobs.json'), 'utf-8'),
-);
+import commitFixture from '../fixtures/repos.commits.get.json';
+import jobsFixture from '../fixtures/actions.runs.jobs.json';
 
 vi.hoisted(() => {
   const path = require('node:path');
   process.env.GITHUB_EVENT_PATH = path.join(
     __dirname,
-    '__fixtures__',
+    '..',
+    'fixtures',
     'event.push.json',
   );
   process.env.GITHUB_REPOSITORY = 'h3y6e/test';
