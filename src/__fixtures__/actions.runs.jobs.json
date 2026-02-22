@@ -1,0 +1,12 @@
+{
+  "total_count": 1,
+  "jobs": [
+    {
+      "id": 42,
+      "name": "build",
+      "status": "completed",
+      "conclusion": "success",
+      "started_at": "2024-01-01T12:00:00Z"
+    }
+  ]
+}

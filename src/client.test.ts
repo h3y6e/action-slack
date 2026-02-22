@@ -77,7 +77,9 @@ describe('Client', () => {
     mockIncomingWebhookConstructor.mockReset();
   });
 
-  describe('Webhook URL validation', () => {
+  // ── constructor ────────────────────────────────────────────────────
+
+  describe('constructor', () => {
     it.each([
       ['undefined', undefined],
       ['empty string', ''],
@@ -89,7 +91,9 @@ describe('Client', () => {
     });
   });
 
-  describe('Attachment color resolution by status', () => {
+  // ── injectColor() ──────────────────────────────────────────────────
+
+  describe('injectColor()', () => {
     it.each([
       [Success, 'good'],
       [Cancelled, 'warning'],
@@ -105,7 +109,9 @@ describe('Client', () => {
     });
   });
 
-  describe('Mention text generation', () => {
+  // ── mentionText() ──────────────────────────────────────────────────
+
+  describe('mentionText()', () => {
     describe('when if_mention does not match', () => {
       it('returns empty string when mention is empty', () => {
         const client = createClient({ mention: '', if_mention: Success });
@@ -119,17 +125,17 @@ describe('Client', () => {
     });
 
     describe('mention format by type', () => {
-      it('formats a user ID as <@id>', () => {
+      it('user ID -> <@id>', () => {
         const client = createClient({ mention: 'user1', if_mention: Success });
         expect(client.mentionText(Success)).toBe('<@user1> ');
       });
 
-      it('formats "here" as <!here>', () => {
+      it('"here" -> <!here>', () => {
         const client = createClient({ mention: 'here', if_mention: Success });
         expect(client.mentionText(Success)).toBe('<!here> ');
       });
 
-      it('formats "channel" as <!channel>', () => {
+      it('"channel" -> <!channel>', () => {
         const client = createClient({
           mention: 'channel',
           if_mention: Success,
@@ -137,7 +143,7 @@ describe('Client', () => {
         expect(client.mentionText(Success)).toBe('<!channel> ');
       });
 
-      it('formats "subteam^ID" as <!subteam^ID>', () => {
+      it('"subteam^ID" -> <!subteam^ID>', () => {
         const client = createClient({
           mention: 'subteam^ABC123',
           if_mention: Success,
@@ -164,38 +170,57 @@ describe('Client', () => {
       });
     });
 
-    describe('when if_mention is "always"', () => {
-      it('returns mention for every status', () => {
+    describe('if_mention: "always"', () => {
+      it('matches any status', () => {
         const client = createClient({ mention: 'user1', if_mention: 'always' });
         expect(client.mentionText(Success)).toBe('<@user1> ');
         expect(client.mentionText(Failure)).toBe('<@user1> ');
         expect(client.mentionText(Cancelled)).toBe('<@user1> ');
       });
     });
-  });
 
-  describe('Notification text assembly', () => {
-    describe('default message fallback', () => {
-      it('uses success_message when text is empty', () => {
-        expect(createClient({ status: Success }).injectText('')).toBe(
-          'Succeeded GitHub Actions',
-        );
+    describe('if_mention with CSV statuses', () => {
+      it('mentions when status is in the CSV list', () => {
+        const client = createClient({
+          mention: 'user1',
+          if_mention: 'success,failure',
+        });
+        expect(client.mentionText(Success)).toBe('<@user1> ');
+        expect(client.mentionText(Failure)).toBe('<@user1> ');
       });
 
-      it('uses cancelled_message when text is empty', () => {
-        expect(createClient({ status: Cancelled }).injectText('')).toBe(
-          'Cancelled GitHub Actions',
-        );
-      });
-
-      it('uses failure_message when text is empty', () => {
-        expect(createClient({ status: Failure }).injectText('')).toBe(
-          'Failed GitHub Actions',
-        );
+      it('does not mention when status is not in the CSV list', () => {
+        const client = createClient({
+          mention: 'user1',
+          if_mention: 'success,failure',
+        });
+        expect(client.mentionText(Cancelled)).toBe('');
       });
     });
+  });
 
-    it('overrides default message when text is provided', () => {
+  // ── injectText() ───────────────────────────────────────────────────
+
+  describe('injectText()', () => {
+    it('uses success_message when text is empty', () => {
+      expect(createClient({ status: Success }).injectText('')).toBe(
+        'Succeeded GitHub Actions',
+      );
+    });
+
+    it('uses cancelled_message when text is empty', () => {
+      expect(createClient({ status: Cancelled }).injectText('')).toBe(
+        'Cancelled GitHub Actions',
+      );
+    });
+
+    it('uses failure_message when text is empty', () => {
+      expect(createClient({ status: Failure }).injectText('')).toBe(
+        'Failed GitHub Actions',
+      );
+    });
+
+    it('uses provided text over default message', () => {
       expect(createClient({ status: Success }).injectText('Deploy done')).toBe(
         'Deploy done',
       );
@@ -217,7 +242,9 @@ describe('Client', () => {
     });
   });
 
-  describe('Slack payload construction', () => {
+  // ── prepare() / send() ─────────────────────────────────────────────
+
+  describe('prepare()', () => {
     it('returns a payload with text, username, icon_emoji, channel, and attachments', async () => {
       const client = createClient({
         status: Success,
@@ -233,6 +260,20 @@ describe('Client', () => {
       expect(payload.attachments).toHaveLength(1);
     });
 
+    it('includes author_name in the attachment', async () => {
+      const client = createClient({ author_name: 'deploy-bot' });
+      const payload = await client.prepare('');
+      expect(payload.attachments[0].author_name).toBe('deploy-bot');
+    });
+
+    it('defaults to "repo,commit" when fields input is empty', async () => {
+      const client = createClient({ fields: '' });
+      const payload = await client.prepare('');
+      expect(payload.attachments).toHaveLength(1);
+    });
+  });
+
+  describe('send()', () => {
     it('sends the prepared payload via webhook', async () => {
       const client = createClient();
       const payload = await client.prepare('');
@@ -241,20 +282,18 @@ describe('Client', () => {
     });
   });
 
-  describe('Custom payload evaluation', () => {
-    it('evaluates a JS object expression string and returns the result', async () => {
+  // ── custom() ───────────────────────────────────────────────────────
+
+  describe('custom()', () => {
+    it('evaluates a JS object expression and returns the result', async () => {
       const result = await createClient().custom('{ text: "hello world" }');
       expect(result).toEqual({ text: 'hello world' });
     });
-
-    it('populates fields with default "repo,commit" when fields input is empty', async () => {
-      const client = createClient({ fields: '' });
-      const payload = await client.prepare('');
-      expect(payload.attachments).toHaveLength(1);
-    });
   });
 
-  describe('Job name resolution', () => {
+  // ── jobName ────────────────────────────────────────────────────────
+
+  describe('jobName', () => {
     let originalMatrixContext: string | undefined;
 
     beforeEach(() => {
@@ -269,7 +308,7 @@ describe('Client', () => {
       }
     });
 
-    it('appends matrix values to job name when MATRIX_CONTEXT is set', () => {
+    it('appends matrix values when MATRIX_CONTEXT is set', () => {
       process.env.MATRIX_CONTEXT = JSON.stringify({ os: 'ubuntu', node: '18' });
       const client = createClient({ job_name: '' });
       expect((client as any).jobName).toBe('test-job (ubuntu, 18)');
@@ -286,7 +325,7 @@ describe('Client', () => {
       expect((client as any).jobName).toBe('my-job');
     });
 
-    it('ignores MATRIX_CONTEXT when its value is "null"', () => {
+    it('ignores MATRIX_CONTEXT when value is "null"', () => {
       process.env.MATRIX_CONTEXT = 'null';
       const client = createClient({ job_name: '' });
       expect((client as any).jobName).toBe('test-job');
@@ -299,34 +338,9 @@ describe('Client', () => {
     });
   });
 
-  describe('if_mention with CSV statuses', () => {
-    it('mentions when status is in the CSV list', () => {
-      const client = createClient({
-        mention: 'user1',
-        if_mention: 'success,failure',
-      });
-      expect(client.mentionText(Success)).toBe('<@user1> ');
-      expect(client.mentionText(Failure)).toBe('<@user1> ');
-    });
+  // ── proxy ──────────────────────────────────────────────────────────
 
-    it('does not mention when status is not in the CSV list', () => {
-      const client = createClient({
-        mention: 'user1',
-        if_mention: 'success,failure',
-      });
-      expect(client.mentionText(Cancelled)).toBe('');
-    });
-  });
-
-  describe('Payload includes author_name', () => {
-    it('includes author_name in the attachment', async () => {
-      const client = createClient({ author_name: 'deploy-bot' });
-      const payload = await client.prepare('');
-      expect(payload.attachments[0].author_name).toBe('deploy-bot');
-    });
-  });
-
-  describe('Proxy configuration', () => {
+  describe('proxy', () => {
     let originalHttpsProxy: string | undefined;
     let originalHTTPSProxy: string | undefined;
 
@@ -348,7 +362,7 @@ describe('Client', () => {
       }
     });
 
-    it('passes an agent option to IncomingWebhook when https_proxy is set', () => {
+    it('passes agent to IncomingWebhook when https_proxy is set', () => {
       process.env.https_proxy = 'http://proxy:8080';
       createClient();
       expect(mockIncomingWebhookConstructor).toHaveBeenCalledOnce();
@@ -356,7 +370,7 @@ describe('Client', () => {
       expect(options?.agent).toBeDefined();
     });
 
-    it('passes an agent option to IncomingWebhook when HTTPS_PROXY is set', () => {
+    it('passes agent to IncomingWebhook when HTTPS_PROXY is set', () => {
       process.env.HTTPS_PROXY = 'http://proxy:8080';
       createClient();
       expect(mockIncomingWebhookConstructor).toHaveBeenCalledOnce();
@@ -364,7 +378,7 @@ describe('Client', () => {
       expect(options?.agent).toBeDefined();
     });
 
-    it('does not pass an agent option when no proxy env var is set', () => {
+    it('does not pass agent when no proxy env var is set', () => {
       delete process.env.https_proxy;
       delete process.env.HTTPS_PROXY;
       createClient();

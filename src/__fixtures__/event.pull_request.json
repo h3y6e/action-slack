@@ -1,0 +1,10 @@
+{
+  "pull_request": {
+    "number": 1,
+    "title": "Fix the bug",
+    "html_url": "https://github.com/h3y6e/test/pull/1",
+    "head": {
+      "sha": "pr-head-sha"
+    }
+  }
+}
