@@ -3,4 +3,3 @@
 	versionFile = package.json
 	vPrefix = true
 	command = mise run prerelease
-	release = draft
