@@ -60,28 +60,10 @@ function createFactory(
   return new FieldFactory(fields, 'build', gitHubBaseUrl, octokit as never);
 }
 
-const AS_ENV_VARS = [
-  'AS_REPO',
-  'AS_COMMIT',
-  'AS_MESSAGE',
-  'AS_AUTHOR',
-  'AS_ACTION',
-  'AS_JOB',
-  'AS_TOOK',
-  'AS_EVENT_NAME',
-  'AS_REF',
-  'AS_WORKFLOW',
-  'AS_WORKFLOW_RUN',
-  'AS_PULL_REQUEST',
-];
-
 describe('FieldFactory', () => {
   beforeEach(() => {
     mockContext.eventName = 'push';
     mockContext.payload = {};
-    for (const key of AS_ENV_VARS) {
-      delete process.env[key];
-    }
   });
 
   afterEach(() => {

@@ -23,25 +23,6 @@ import { setupServer } from 'msw/node';
 import { http, HttpResponse } from 'msw';
 import commitFixture from '../fixtures/repos.commits.get.json';
 import jobsFixture from '../fixtures/actions.runs.jobs.json';
-
-vi.hoisted(() => {
-  const path = require('node:path');
-  process.env.GITHUB_EVENT_PATH = path.join(
-    __dirname,
-    '..',
-    'fixtures',
-    'event.push.json',
-  );
-  process.env.GITHUB_REPOSITORY = 'h3y6e/test';
-  process.env.GITHUB_SHA = 'abc123def456789';
-  process.env.GITHUB_REF = 'refs/heads/main';
-  process.env.GITHUB_WORKFLOW = 'CI';
-  process.env.GITHUB_RUN_ID = '99';
-  process.env.GITHUB_JOB = 'build';
-  process.env.GITHUB_EVENT_NAME = 'push';
-  process.env.GITHUB_ACTION = 'run';
-});
-
 import { context } from '@actions/github';
 import { Client, Success, Failure, Cancelled } from './client';
 import type { With } from './client';
@@ -75,21 +56,6 @@ const defaultWith: With = {
   failure_message: 'Failed GitHub Actions',
 };
 
-const AS_ENV_VARS = [
-  'AS_REPO',
-  'AS_COMMIT',
-  'AS_MESSAGE',
-  'AS_AUTHOR',
-  'AS_ACTION',
-  'AS_JOB',
-  'AS_TOOK',
-  'AS_EVENT_NAME',
-  'AS_REF',
-  'AS_WORKFLOW',
-  'AS_WORKFLOW_RUN',
-  'AS_PULL_REQUEST',
-];
-
 // ── Test suite ─────────────────────────────────────────────────────────
 describe('Client (integration)', () => {
   let mockAgent: MockAgent;
@@ -115,9 +81,6 @@ describe('Client (integration)', () => {
     slackRequests.length = 0;
     originalExitCode = process.exitCode;
 
-    for (const key of AS_ENV_VARS) {
-      delete process.env[key];
-    }
     delete process.env.MATRIX_CONTEXT;
   });
 
