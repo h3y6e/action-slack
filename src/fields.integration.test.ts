@@ -88,10 +88,7 @@ describe('FieldFactory (integration)', () => {
     await mockAgent.close();
   });
 
-  function interceptGitHubApi(options?: {
-    commit?: object;
-    jobs?: object;
-  }) {
+  function interceptGitHubApi(options?: { commit?: object; jobs?: object }) {
     const pool = mockAgent.get('https://api.github.com');
 
     pool
@@ -401,7 +398,10 @@ describe('FieldFactory (integration)', () => {
       };
 
       const octokit = interceptGitHubApi();
-      const result = await createFactory('workflow,action', octokit).attachments();
+      const result = await createFactory(
+        'workflow,action',
+        octokit,
+      ).attachments();
 
       const workflow = result.find(f => f.title === 'workflow');
       expect(workflow?.value).toContain('pr-head-sha-999');
@@ -432,7 +432,11 @@ describe('FieldFactory (integration)', () => {
           ],
         },
       });
-      const factory = createFactory('job', octokit, 'build (ubuntu-latest, 18)');
+      const factory = createFactory(
+        'job',
+        octokit,
+        'build (ubuntu-latest, 18)',
+      );
       const [field] = await factory.attachments();
 
       expect(field.value).toContain('/runs/55|');

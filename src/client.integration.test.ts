@@ -134,10 +134,7 @@ describe('Client (integration)', () => {
     await mockAgent.close();
   });
 
-  function interceptGitHubApi(options?: {
-    commit?: object;
-    jobs?: object;
-  }) {
+  function interceptGitHubApi(options?: { commit?: object; jobs?: object }) {
     const pool = mockAgent.get('https://api.github.com');
 
     pool
@@ -179,9 +176,9 @@ describe('Client (integration)', () => {
     });
 
     it('throws when webhook URL is empty', () => {
-      expect(
-        () => new Client(defaultWith, 'fake-token', '', ''),
-      ).toThrow('Specify secrets.SLACK_WEBHOOK_URL');
+      expect(() => new Client(defaultWith, 'fake-token', '', '')).toThrow(
+        'Specify secrets.SLACK_WEBHOOK_URL',
+      );
     });
   });
 
@@ -195,10 +192,9 @@ describe('Client (integration)', () => {
       expect(payload.text).toBe('Build passed');
       expect(payload.username).toBe('bot');
       expect(payload.attachments[0].color).toBe('good');
-      expect(payload.attachments[0].fields.map((f: { title: string }) => f.title)).toEqual([
-        'repo',
-        'commit',
-      ]);
+      expect(
+        payload.attachments[0].fields.map((f: { title: string }) => f.title),
+      ).toEqual(['repo', 'commit']);
     });
 
     it('maps status to color: failure -> danger', async () => {
@@ -236,7 +232,8 @@ describe('Client (integration)', () => {
       interceptGitHubApi();
       const payload = await createClient({
         status: Success,
-        fields: 'repo,message,commit,author,action,eventName,ref,workflow,job,took,pullRequest',
+        fields:
+          'repo,message,commit,author,action,eventName,ref,workflow,job,took,pullRequest',
       }).prepare('');
 
       const titles = payload.attachments[0].fields.map(
@@ -369,21 +366,27 @@ describe('Client (integration)', () => {
   describe('payload properties', () => {
     it('author_name appears in attachment', async () => {
       interceptGitHubApi();
-      const payload = await createClient({ author_name: 'my workflow' }).prepare('');
+      const payload = await createClient({
+        author_name: 'my workflow',
+      }).prepare('');
 
       expect(payload.attachments[0].author_name).toBe('my workflow');
     });
 
     it('icon_emoji appears in payload', async () => {
       interceptGitHubApi();
-      const payload = await createClient({ icon_emoji: ':octocat:' }).prepare('');
+      const payload = await createClient({ icon_emoji: ':octocat:' }).prepare(
+        '',
+      );
 
       expect(payload.icon_emoji).toBe(':octocat:');
     });
 
     it('icon_url appears in payload', async () => {
       interceptGitHubApi();
-      const payload = await createClient({ icon_url: 'http://example.com/icon.png' }).prepare('');
+      const payload = await createClient({
+        icon_url: 'http://example.com/icon.png',
+      }).prepare('');
 
       expect(payload.icon_url).toBe('http://example.com/icon.png');
     });
@@ -397,7 +400,9 @@ describe('Client (integration)', () => {
 
     it('username appears in payload', async () => {
       interceptGitHubApi();
-      const payload = await createClient({ username: 'deploy-bot' }).prepare('');
+      const payload = await createClient({ username: 'deploy-bot' }).prepare(
+        '',
+      );
 
       expect(payload.username).toBe('deploy-bot');
     });
@@ -447,7 +452,8 @@ describe('Client (integration)', () => {
 
       expect(result.text).toBe('Custom Field Check');
       expect(result.attachments![0].color).toBe('good');
-      const fields = (result.attachments![0] as Record<string, unknown>).fields as Array<Record<string, unknown>>;
+      const fields = (result.attachments![0] as Record<string, unknown>)
+        .fields as Array<Record<string, unknown>>;
       expect(fields[0].value).toBe('lower case check');
       expect(fields[1].value).toBe('reverse string');
       expect(fields[2].short).toBe(false);
@@ -468,7 +474,8 @@ describe('Client (integration)', () => {
       }`);
 
       expect(result.attachments![0].color).toBe('good');
-      const text = (result.attachments![0] as Record<string, unknown>).text as string;
+      const text = (result.attachments![0] as Record<string, unknown>)
+        .text as string;
       expect(text).toContain('h3y6e/test');
       expect(text).toContain('1 min 5 sec');
 
@@ -524,9 +531,7 @@ describe('Client (integration)', () => {
       interceptGitHubApi({
         jobs: {
           total_count: 1,
-          jobs: [
-            { id: 77, name: 'Test', started_at: '2024-01-01T12:00:00Z' },
-          ],
+          jobs: [{ id: 77, name: 'Test', started_at: '2024-01-01T12:00:00Z' }],
         },
       });
 
