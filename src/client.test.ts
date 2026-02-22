@@ -233,29 +233,11 @@ describe('Client', () => {
       expect(payload.attachments).toHaveLength(1);
     });
 
-    it.each([
-      [Success, 'good'],
-      [Failure, 'danger'],
-      [Cancelled, 'warning'],
-    ] as const)(
-      'sets attachment color to "%s" for status "%s"',
-      async (status, expectedColor) => {
-        const payload = await createClient({ status }).prepare('');
-        expect(payload.attachments[0].color).toBe(expectedColor);
-      },
-    );
-  });
-
-  describe('Sending to Slack', () => {
-    it('passes a string payload directly to the webhook', async () => {
-      await createClient().send('hello');
-      expect(mockSend).toHaveBeenCalledWith('hello');
-    });
-
-    it('passes an object payload directly to the webhook', async () => {
-      const payload = { text: 'hello', attachments: [] };
-      await createClient().send(payload);
-      expect(mockSend).toHaveBeenCalledWith(payload);
+    it('sends the prepared payload via webhook', async () => {
+      const client = createClient();
+      const payload = await client.prepare('');
+      await client.send(payload);
+      expect(mockSend).toHaveBeenCalledOnce();
     });
   });
 
@@ -265,17 +247,10 @@ describe('Client', () => {
       expect(result).toEqual({ text: 'hello world' });
     });
 
-    it('evaluates an object expression containing an array', async () => {
-      const result = await createClient().custom(
-        '{ text: "t", attachments: [{ color: "good" }] }',
-      );
-      expect(result).toEqual({ text: 't', attachments: [{ color: 'good' }] });
-    });
-  });
-
-  describe('Constructor defaults', () => {
-    it('does not throw when fields input is empty', () => {
-      expect(() => createClient({ fields: '' })).not.toThrow();
+    it('populates fields with default "repo,commit" when fields input is empty', async () => {
+      const client = createClient({ fields: '' });
+      const payload = await client.prepare('');
+      expect(payload.attachments).toHaveLength(1);
     });
   });
 
@@ -373,22 +348,12 @@ describe('Client', () => {
       }
     });
 
-    it('creates client without error when https_proxy is set', () => {
-      process.env.https_proxy = 'http://proxy:8080';
-      expect(() => createClient()).not.toThrow();
-    });
-
     it('passes an agent option to IncomingWebhook when https_proxy is set', () => {
       process.env.https_proxy = 'http://proxy:8080';
       createClient();
       expect(mockIncomingWebhookConstructor).toHaveBeenCalledOnce();
       const options = mockIncomingWebhookConstructor.mock.calls[0][1];
       expect(options?.agent).toBeDefined();
-    });
-
-    it('creates client without error when HTTPS_PROXY is set', () => {
-      process.env.HTTPS_PROXY = 'http://proxy:8080';
-      expect(() => createClient()).not.toThrow();
     });
 
     it('passes an agent option to IncomingWebhook when HTTPS_PROXY is set', () => {

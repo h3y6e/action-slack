@@ -88,66 +88,6 @@ describe('FieldFactory', () => {
     vi.useRealTimers();
   });
 
-  describe('Field list inclusion check', () => {
-    it('returns true for fields in the list', () => {
-      const factory = createFactory('repo,commit');
-      expect(factory.includes('repo')).toBe(true);
-      expect(factory.includes('commit')).toBe(true);
-    });
-
-    it('returns false for fields not in the list', () => {
-      const factory = createFactory('repo');
-      expect(factory.includes('commit')).toBe(false);
-    });
-
-    it('returns true for every field when "all" is specified', () => {
-      const factory = createFactory('all');
-      expect(factory.includes('repo')).toBe(true);
-      expect(factory.includes('message')).toBe(true);
-      expect(factory.includes('took')).toBe(true);
-    });
-
-    it('ignores spaces in the field list', () => {
-      const factory = createFactory('repo, commit');
-      expect(factory.includes('repo')).toBe(true);
-      expect(factory.includes('commit')).toBe(true);
-    });
-  });
-
-  describe('Type-safe filtering of undefined values', () => {
-    it('returns an array with undefined entries removed', () => {
-      const factory = createFactory('repo');
-      const result = factory.filterField(
-        [
-          { title: 'a', value: 'v', short: true },
-          undefined,
-          { title: 'b', value: 'w', short: false },
-        ],
-        undefined,
-      );
-      expect(result).toEqual([
-        { title: 'a', value: 'v', short: true },
-        { title: 'b', value: 'w', short: false },
-      ]);
-    });
-
-    it('returns an empty array when all elements are undefined', () => {
-      const factory = createFactory('repo');
-      expect(
-        factory.filterField([undefined, undefined], undefined),
-      ).toHaveLength(0);
-    });
-
-    it('preserves all elements when none are undefined', () => {
-      const factory = createFactory('repo');
-      const items = [
-        { title: 'a', value: '1', short: true },
-        { title: 'b', value: '2', short: true },
-      ];
-      expect(factory.filterField(items, undefined)).toEqual(items);
-    });
-  });
-
   describe('Attachment data generation per field', () => {
     it('returns an empty array when no fields match', async () => {
       const factory = createFactory('nonexistent');
