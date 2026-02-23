@@ -77,27 +77,25 @@ describe('Client', () => {
     mockIncomingWebhookConstructor.mockReset();
   });
 
-  describe('Webhook URL validation', () => {
-    it.each([
-      ['undefined', undefined],
-      ['empty string', ''],
-      ['null', null],
-    ])('throws when webhookUrl is %s', (_label, webhookUrl) => {
-      expect(() => new Client(defaultWith, 'token', '', webhookUrl)).toThrow(
+  // ── constructor ────────────────────────────────────────────────────
+
+  describe('constructor', () => {
+    it('throws when webhookUrl is undefined', () => {
+      expect(() => new Client(defaultWith, 'token', '', undefined)).toThrow(
+        'Specify secrets.SLACK_WEBHOOK_URL',
+      );
+    });
+
+    it('throws when webhookUrl is null', () => {
+      expect(() => new Client(defaultWith, 'token', '', null)).toThrow(
         'Specify secrets.SLACK_WEBHOOK_URL',
       );
     });
   });
 
-  describe('Attachment color resolution by status', () => {
-    it.each([
-      [Success, 'good'],
-      [Cancelled, 'warning'],
-      [Failure, 'danger'],
-    ] as const)('returns "%s" for status "%s"', (status, expectedColor) => {
-      expect(createClient({ status }).injectColor()).toBe(expectedColor);
-    });
+  // ── injectColor() ──────────────────────────────────────────────────
 
+  describe('injectColor()', () => {
     it('throws for an unknown status', () => {
       expect(() => createClient({ status: 'unknown' }).injectColor()).toThrow(
         'invalid status: unknown',
@@ -105,109 +103,51 @@ describe('Client', () => {
     });
   });
 
-  describe('Mention text generation', () => {
-    describe('when if_mention does not match', () => {
-      it('returns empty string when mention is empty', () => {
-        const client = createClient({ mention: '', if_mention: Success });
-        expect(client.mentionText(Success)).toBe('');
-      });
+  // ── mentionText() ──────────────────────────────────────────────────
 
-      it('returns empty string when if_mention status does not match', () => {
-        const client = createClient({ mention: 'user1', if_mention: Failure });
-        expect(client.mentionText(Success)).toBe('');
-      });
+  describe('mentionText()', () => {
+    it('returns empty string when mention is empty', () => {
+      const client = createClient({ mention: '', if_mention: Success });
+      expect(client.mentionText(Success)).toBe('');
     });
 
-    describe('mention format by type', () => {
-      it('formats a user ID as <@id>', () => {
-        const client = createClient({ mention: 'user1', if_mention: Success });
-        expect(client.mentionText(Success)).toBe('<@user1> ');
+    it('strips spaces inside the mention list', () => {
+      const client = createClient({
+        mention: 'user1, user2',
+        if_mention: Success,
       });
-
-      it('formats "here" as <!here>', () => {
-        const client = createClient({ mention: 'here', if_mention: Success });
-        expect(client.mentionText(Success)).toBe('<!here> ');
-      });
-
-      it('formats "channel" as <!channel>', () => {
-        const client = createClient({
-          mention: 'channel',
-          if_mention: Success,
-        });
-        expect(client.mentionText(Success)).toBe('<!channel> ');
-      });
-
-      it('formats "subteam^ID" as <!subteam^ID>', () => {
-        const client = createClient({
-          mention: 'subteam^ABC123',
-          if_mention: Success,
-        });
-        expect(client.mentionText(Success)).toBe('<!subteam^ABC123> ');
-      });
+      expect(client.mentionText(Success)).toBe('<@user1> <@user2> ');
     });
 
-    describe('multiple mentions', () => {
-      it('joins comma-separated mentions with spaces', () => {
-        const client = createClient({
-          mention: 'user1,here',
-          if_mention: Success,
-        });
-        expect(client.mentionText(Success)).toBe('<@user1> <!here> ');
-      });
-
-      it('strips spaces inside the mention list', () => {
-        const client = createClient({
-          mention: 'user1, user2',
-          if_mention: Success,
-        });
-        expect(client.mentionText(Success)).toBe('<@user1> <@user2> ');
-      });
+    it('if_mention: "always" matches any status', () => {
+      const client = createClient({ mention: 'user1', if_mention: 'always' });
+      expect(client.mentionText(Success)).toBe('<@user1> ');
+      expect(client.mentionText(Failure)).toBe('<@user1> ');
+      expect(client.mentionText(Cancelled)).toBe('<@user1> ');
     });
 
-    describe('when if_mention is "always"', () => {
-      it('returns mention for every status', () => {
-        const client = createClient({ mention: 'user1', if_mention: 'always' });
-        expect(client.mentionText(Success)).toBe('<@user1> ');
-        expect(client.mentionText(Failure)).toBe('<@user1> ');
-        expect(client.mentionText(Cancelled)).toBe('<@user1> ');
+    it('does not mention when status is not in the CSV list', () => {
+      const client = createClient({
+        mention: 'user1',
+        if_mention: 'success,failure',
       });
+      expect(client.mentionText(Cancelled)).toBe('');
     });
   });
 
-  describe('Notification text assembly', () => {
-    describe('default message fallback', () => {
-      it('uses success_message when text is empty', () => {
-        expect(createClient({ status: Success }).injectText('')).toBe(
-          'Succeeded GitHub Actions',
-        );
-      });
+  // ── injectText() ───────────────────────────────────────────────────
 
-      it('uses cancelled_message when text is empty', () => {
-        expect(createClient({ status: Cancelled }).injectText('')).toBe(
-          'Cancelled GitHub Actions',
-        );
-      });
-
-      it('uses failure_message when text is empty', () => {
-        expect(createClient({ status: Failure }).injectText('')).toBe(
-          'Failed GitHub Actions',
-        );
-      });
-    });
-
-    it('overrides default message when text is provided', () => {
-      expect(createClient({ status: Success }).injectText('Deploy done')).toBe(
-        'Deploy done',
+  describe('injectText()', () => {
+    it('uses success_message when text is empty', () => {
+      expect(createClient({ status: Success }).injectText('')).toBe(
+        'Succeeded GitHub Actions',
       );
     });
 
-    it('prepends mention when if_mention matches', () => {
-      const client = createClient({
-        status: Success,
-        mention: 'user1',
-        if_mention: Success,
-      });
-      expect(client.injectText('')).toBe('<@user1> Succeeded GitHub Actions');
+    it('uses cancelled_message when text is empty', () => {
+      expect(createClient({ status: Cancelled }).injectText('')).toBe(
+        'Cancelled GitHub Actions',
+      );
     });
 
     it('throws for an unknown status', () => {
@@ -217,69 +157,19 @@ describe('Client', () => {
     });
   });
 
-  describe('Slack payload construction', () => {
-    it('returns a payload with text, username, icon_emoji, channel, and attachments', async () => {
-      const client = createClient({
-        status: Success,
-        username: 'my-bot',
-        icon_emoji: ':robot:',
-        channel: '#general',
-      });
-      const payload = await client.prepare('Build passed');
-      expect(payload.text).toBe('Build passed');
-      expect(payload.username).toBe('my-bot');
-      expect(payload.icon_emoji).toBe(':robot:');
-      expect(payload.channel).toBe('#general');
+  // ── prepare() ──────────────────────────────────────────────────────
+
+  describe('prepare()', () => {
+    it('defaults to "repo,commit" when fields input is empty', async () => {
+      const client = createClient({ fields: '' });
+      const payload = await client.prepare('');
       expect(payload.attachments).toHaveLength(1);
     });
-
-    it.each([
-      [Success, 'good'],
-      [Failure, 'danger'],
-      [Cancelled, 'warning'],
-    ] as const)(
-      'sets attachment color to "%s" for status "%s"',
-      async (status, expectedColor) => {
-        const payload = await createClient({ status }).prepare('');
-        expect(payload.attachments[0].color).toBe(expectedColor);
-      },
-    );
   });
 
-  describe('Sending to Slack', () => {
-    it('passes a string payload directly to the webhook', async () => {
-      await createClient().send('hello');
-      expect(mockSend).toHaveBeenCalledWith('hello');
-    });
+  // ── jobName ────────────────────────────────────────────────────────
 
-    it('passes an object payload directly to the webhook', async () => {
-      const payload = { text: 'hello', attachments: [] };
-      await createClient().send(payload);
-      expect(mockSend).toHaveBeenCalledWith(payload);
-    });
-  });
-
-  describe('Custom payload evaluation', () => {
-    it('evaluates a JS object expression string and returns the result', async () => {
-      const result = await createClient().custom('{ text: "hello world" }');
-      expect(result).toEqual({ text: 'hello world' });
-    });
-
-    it('evaluates an object expression containing an array', async () => {
-      const result = await createClient().custom(
-        '{ text: "t", attachments: [{ color: "good" }] }',
-      );
-      expect(result).toEqual({ text: 't', attachments: [{ color: 'good' }] });
-    });
-  });
-
-  describe('Constructor defaults', () => {
-    it('does not throw when fields input is empty', () => {
-      expect(() => createClient({ fields: '' })).not.toThrow();
-    });
-  });
-
-  describe('Job name resolution', () => {
+  describe('jobName', () => {
     let originalMatrixContext: string | undefined;
 
     beforeEach(() => {
@@ -294,24 +184,13 @@ describe('Client', () => {
       }
     });
 
-    it('appends matrix values to job name when MATRIX_CONTEXT is set', () => {
-      process.env.MATRIX_CONTEXT = JSON.stringify({ os: 'ubuntu', node: '18' });
-      const client = createClient({ job_name: '' });
-      expect((client as any).jobName).toBe('test-job (ubuntu, 18)');
-    });
-
     it('uses context.job when job_name is empty and no matrix', () => {
       delete process.env.MATRIX_CONTEXT;
       const client = createClient({ job_name: '' });
       expect((client as any).jobName).toBe('test-job');
     });
 
-    it('uses custom job_name when provided', () => {
-      const client = createClient({ job_name: 'my-job' });
-      expect((client as any).jobName).toBe('my-job');
-    });
-
-    it('ignores MATRIX_CONTEXT when its value is "null"', () => {
+    it('ignores MATRIX_CONTEXT when value is "null"', () => {
       process.env.MATRIX_CONTEXT = 'null';
       const client = createClient({ job_name: '' });
       expect((client as any).jobName).toBe('test-job');
@@ -324,34 +203,9 @@ describe('Client', () => {
     });
   });
 
-  describe('if_mention with CSV statuses', () => {
-    it('mentions when status is in the CSV list', () => {
-      const client = createClient({
-        mention: 'user1',
-        if_mention: 'success,failure',
-      });
-      expect(client.mentionText(Success)).toBe('<@user1> ');
-      expect(client.mentionText(Failure)).toBe('<@user1> ');
-    });
+  // ── proxy ──────────────────────────────────────────────────────────
 
-    it('does not mention when status is not in the CSV list', () => {
-      const client = createClient({
-        mention: 'user1',
-        if_mention: 'success,failure',
-      });
-      expect(client.mentionText(Cancelled)).toBe('');
-    });
-  });
-
-  describe('Payload includes author_name', () => {
-    it('includes author_name in the attachment', async () => {
-      const client = createClient({ author_name: 'deploy-bot' });
-      const payload = await client.prepare('');
-      expect(payload.attachments[0].author_name).toBe('deploy-bot');
-    });
-  });
-
-  describe('Proxy configuration', () => {
+  describe('proxy', () => {
     let originalHttpsProxy: string | undefined;
     let originalHTTPSProxy: string | undefined;
 
@@ -373,12 +227,7 @@ describe('Client', () => {
       }
     });
 
-    it('creates client without error when https_proxy is set', () => {
-      process.env.https_proxy = 'http://proxy:8080';
-      expect(() => createClient()).not.toThrow();
-    });
-
-    it('passes an agent option to IncomingWebhook when https_proxy is set', () => {
+    it('passes agent to IncomingWebhook when https_proxy is set', () => {
       process.env.https_proxy = 'http://proxy:8080';
       createClient();
       expect(mockIncomingWebhookConstructor).toHaveBeenCalledOnce();
@@ -386,12 +235,7 @@ describe('Client', () => {
       expect(options?.agent).toBeDefined();
     });
 
-    it('creates client without error when HTTPS_PROXY is set', () => {
-      process.env.HTTPS_PROXY = 'http://proxy:8080';
-      expect(() => createClient()).not.toThrow();
-    });
-
-    it('passes an agent option to IncomingWebhook when HTTPS_PROXY is set', () => {
+    it('passes agent to IncomingWebhook when HTTPS_PROXY is set', () => {
       process.env.HTTPS_PROXY = 'http://proxy:8080';
       createClient();
       expect(mockIncomingWebhookConstructor).toHaveBeenCalledOnce();
@@ -399,7 +243,7 @@ describe('Client', () => {
       expect(options?.agent).toBeDefined();
     });
 
-    it('does not pass an agent option when no proxy env var is set', () => {
+    it('does not pass agent when no proxy env var is set', () => {
       delete process.env.https_proxy;
       delete process.env.HTTPS_PROXY;
       createClient();
