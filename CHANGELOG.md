@@ -1,5 +1,14 @@
 # Changelog
 
+## [v4.0.5](https://github.com/h3y6e/action-slack/compare/v4.0.4...v4.0.5) - 2026-02-23
+- chore(deps): update songmu/tagpr action to v1.17.0 by @renovate[bot] in https://github.com/h3y6e/action-slack/pull/30
+- chore(deps): update dependency oxlint-tsgolint to v0.14.1 by @renovate[bot] in https://github.com/h3y6e/action-slack/pull/36
+- ci: rename release workflow and publish releases directly by @h3y6e in https://github.com/h3y6e/action-slack/pull/41
+- test: remove redundant tests and integration test file by @h3y6e in https://github.com/h3y6e/action-slack/pull/40
+- ci: use E2E-specific secret for e2e workflow webhook URL by @h3y6e in https://github.com/h3y6e/action-slack/pull/42
+- chore(deps): update oxlint monorepo by @renovate[bot] in https://github.com/h3y6e/action-slack/pull/29
+- chore(deps): update dependency @types/node to v25.3.0 by @renovate[bot] in https://github.com/h3y6e/action-slack/pull/28
+
 ## [v4.0.4](https://github.com/h3y6e/action-slack/compare/v4.0.3...v4.0.4) - 2026-02-19
 - fix: update documentation links to GitHub Pages by @h3y6e in https://github.com/h3y6e/action-slack/pull/31
 - chore(deps): pin dependencies by @renovate[bot] in https://github.com/h3y6e/action-slack/pull/27
