@@ -1,5 +1,13 @@
 # Changelog
 
+## [v4.0.6](https://github.com/h3y6e/action-slack/compare/v4.0.5...v4.0.6) - 2026-03-01
+- ci: disable digest pinning for action-slack itself by @h3y6e in https://github.com/h3y6e/action-slack/pull/43
+- chore(deps): pin dependencies by @renovate[bot] in https://github.com/h3y6e/action-slack/pull/35
+- chore(deps): update pnpm to v10.30.2 by @renovate[bot] in https://github.com/h3y6e/action-slack/pull/45
+- chore(deps): update songmu/tagpr action to v1.17.1 by @renovate[bot] in https://github.com/h3y6e/action-slack/pull/46
+- chore(deps): update dependency oxlint-tsgolint to v0.15.0 by @renovate[bot] in https://github.com/h3y6e/action-slack/pull/47
+- chore(deps): update oxlint monorepo by @renovate[bot] in https://github.com/h3y6e/action-slack/pull/48
+
 ## [v4.0.5](https://github.com/h3y6e/action-slack/compare/v4.0.4...v4.0.5) - 2026-02-23
 - chore(deps): update songmu/tagpr action to v1.17.0 by @renovate[bot] in https://github.com/h3y6e/action-slack/pull/30
 - chore(deps): update dependency oxlint-tsgolint to v0.14.1 by @renovate[bot] in https://github.com/h3y6e/action-slack/pull/36
