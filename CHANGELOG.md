@@ -1,5 +1,9 @@
 # Changelog
 
+## [v4.0.7](https://github.com/h3y6e/action-slack/compare/v4.0.6...v4.0.7) - 2026-03-25
+- docs: migrate from Jekyll to Astro Starlight by @h3y6e in https://github.com/h3y6e/action-slack/pull/49
+- docs: fix documentation to match actual code behavior by @h3y6e in https://github.com/h3y6e/action-slack/pull/51
+
 ## [v4.0.6](https://github.com/h3y6e/action-slack/compare/v4.0.5...v4.0.6) - 2026-03-01
 - ci: disable digest pinning for action-slack itself by @h3y6e in https://github.com/h3y6e/action-slack/pull/43
 - chore(deps): pin dependencies by @renovate[bot] in https://github.com/h3y6e/action-slack/pull/35
