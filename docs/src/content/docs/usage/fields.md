@@ -8,7 +8,7 @@ sidebar:
 :::note
 Additional configuration is required to work with matrix.
 Don't forget to add `MATRIX_CONTEXT`.
-Not required if the fields do not contain jobs or tooks.
+Not required if the fields do not contain jobs or took.
 :::
 
 ```yaml
@@ -36,6 +36,7 @@ Corresponding types are as follows.
 | workflowRun | `AS_WORKFLOW_RUN`    | Generate a link to the present workflow run          |
 | message     | `AS_MESSAGE`         | commit message                                       |
 | author      | `AS_AUTHOR`          | The author who pushed                                |
+| action      | `AS_ACTION`          | Generate a checks page link from git sha             |
 | job         | `AS_JOB`             | Generate a job run link of the job that was executed |
 | took        | `AS_TOOK`            | Execution time for the job                           |
 | pullRequest | `AS_PULL_REQUEST`    | Pull Request title, number with link                 |

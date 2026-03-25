@@ -7,18 +7,23 @@ sidebar:
 
 | key                                   | value                                                                                                                                                                                                | default                |
 | ------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------- |
-| [status](#status)                     | `'success'` or `'failure'` or `'cancelled'` or `'custom'`                                                                                                                                            | `''`                   |
+| [status](#status)                     | `'success'` or `'failure'` or `'cancelled'` or `'custom'`                                                                                                                                            | **required**           |
 | [fields](/action-slack/usage/fields/) | You can choose the items you want to add to the fields at the time of notification.                                                                                                                  | `'repo,commit'`        |
 | [text](#text)                         | Specify the text you want to add. All strings will be overwritten.                                                                                                                                   | `''`                   |
 | [author_name](#author_name)           | It can be overwritten by specifying. The job name is recommend.                                                                                                                                      | `'h3y6e@action-slack'` |
 | [mention](#mention)                   | `'here'` or `'channel'` or [user_group_id](https://api.slack.com/reference/surfaces/formatting#mentioning-groups) or [user_id](https://api.slack.com/reference/surfaces/formatting#mentioning-users) | `''`                   |
-| [if_mention](#mention)                | Specify `'success'` or `'failure'` or `'cancelled'` or `'custom'` or `'always'`.                                                                                                                     | `''`                   |
+| [if_mention](#mention)                | Specify `'success'` or `'failure'` or `'cancelled'` or `'always'`.                                                                                                                                   | `''`                   |
 | [username](#username)                 | Override the legacy integration's default name.                                                                                                                                                      | `''`                   |
 | [icon_emoji](#icon_emoji)             | [emoji code](https://www.webfx.com/tools/emoji-cheat-sheet/) string to use in place of the default icon.                                                                                             | `''`                   |
 | [icon_url](#icon_url)                 | icon image URL string to use in place of the default icon.                                                                                                                                           | `''`                   |
 | [channel](#channel)                   | Override the legacy integration's default channel. This should be an ID, such as `C8UJ12P4P`.                                                                                                        | `''`                   |
 | [custom_payload](#custom_payload)     | e.g. `{"text": "Custom Field Check", obj: 'LOWER CASE'.toLowerCase()}`                                                                                                                               | `''`                   |
 | [job_name](#job_name)                 | If you want to overwrite the job name, you must specify it.                                                                                                                                          | `''`                   |
+| [success_message](#success_message)   | Message to use when the status is `'success'` and `text` is empty.                                                                                                                                   | `':white_check_mark: Succeeded GitHub Actions\n'` |
+| [cancelled_message](#cancelled_message) | Message to use when the status is `'cancelled'` and `text` is empty.                                                                                                                               | `':warning: Cancelled GitHub Actions\n'` |
+| [failure_message](#failure_message)   | Message to use when the status is `'failure'` and `text` is empty.                                                                                                                                   | `':no_entry: Failed GitHub Actions\n'` |
+| [github_token](#github_token)         | Use this if you wish to use a different GitHub token than the one provided by the workflow.                                                                                                           | `${{ github.token }}`  |
+| [github_base_url](#github_base_url)   | Specify if you want to use GitHub Enterprise.                                                                                                                                                        | `''`                   |
 
 ## status
 
@@ -209,4 +214,75 @@ jobs:
           fields: job,took
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }} # required
+```
+
+## success_message
+
+Message to use when the status is `success` and `text` is empty.
+
+```yaml
+steps:
+  - uses: h3y6e/action-slack@v4
+    with:
+      status: ${{ job.status }}
+      success_message: ':tada: Build passed!'
+    env:
+      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }} # required
+```
+
+## cancelled_message
+
+Message to use when the status is `cancelled` and `text` is empty.
+
+```yaml
+steps:
+  - uses: h3y6e/action-slack@v4
+    with:
+      status: ${{ job.status }}
+      cancelled_message: ':stop_sign: Build was cancelled.'
+    env:
+      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }} # required
+```
+
+## failure_message
+
+Message to use when the status is `failure` and `text` is empty.
+
+```yaml
+steps:
+  - uses: h3y6e/action-slack@v4
+    with:
+      status: ${{ job.status }}
+      failure_message: ':fire: Build failed!'
+    env:
+      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }} # required
+```
+
+## github_token
+
+Use this if you wish to use a different GitHub token than the one provided by the workflow.
+Defaults to `${{ github.token }}`.
+
+```yaml
+steps:
+  - uses: h3y6e/action-slack@v4
+    with:
+      status: ${{ job.status }}
+      github_token: ${{ secrets.CUSTOM_GITHUB_TOKEN }}
+    env:
+      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }} # required
+```
+
+## github_base_url
+
+Specify if you want to use GitHub Enterprise. When empty, defaults to `https://github.com`.
+
+```yaml
+steps:
+  - uses: h3y6e/action-slack@v4
+    with:
+      status: ${{ job.status }}
+      github_base_url: 'https://github.example.com'
+    env:
+      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }} # required
 ```
