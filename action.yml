@@ -25,7 +25,7 @@ inputs:
     required: false
   if_mention:
     description: |
-      Specify success or failure or cancelled or custom or always.
+      Specify success or failure or cancelled or always.
       Multiple statuses can be specified in csv format.
       e.g. success,failure
     default: ''

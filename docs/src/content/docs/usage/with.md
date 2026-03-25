@@ -44,6 +44,7 @@ steps:
 steps:
   - uses: h3y6e/action-slack@v4
     with:
+      status: ${{ job.status }}
       text: 'any string'
     env:
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }} # required
@@ -55,6 +56,7 @@ steps:
 steps:
   - uses: h3y6e/action-slack@v4
     with:
+      status: ${{ job.status }}
       author_name: 'my workflow'
     env:
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }} # required
@@ -68,6 +70,7 @@ This can be mentioned in combination with `if_mention`.
 steps:
   - uses: h3y6e/action-slack@v4
     with:
+      status: ${{ job.status }}
       mention: 'here'
       if_mention: failure
     env:
@@ -80,6 +83,7 @@ If you want to mention multiple users in multiple cases, you can specify.
 steps:
   - uses: h3y6e/action-slack@v4
     with:
+      status: ${{ job.status }}
       mention: 'user_id,user_id2'
       if_mention: 'failure,cancelled'
     env:
@@ -92,6 +96,7 @@ If you want to mention a user group, you need to add "subteam^" before user grou
 steps:
   - uses: h3y6e/action-slack@v4
     with:
+      status: ${{ job.status }}
       mention: 'subteam^S012ABC3Y4Z' # replace S012ABC3Y4Z with your user group id
       if_mention: 'failure,cancelled'
     env:
@@ -106,6 +111,7 @@ Only legacy incoming webhook supported.
 steps:
   - uses: h3y6e/action-slack@v4
     with:
+      status: ${{ job.status }}
       username: 'my workflow bot'
     env:
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }} # required
@@ -119,6 +125,7 @@ Only legacy incoming webhook supported.
 steps:
   - uses: h3y6e/action-slack@v4
     with:
+      status: ${{ job.status }}
       icon_emoji: ':octocat:'
     env:
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }} # required
@@ -132,6 +139,7 @@ Only legacy incoming webhook supported.
 steps:
   - uses: h3y6e/action-slack@v4
     with:
+      status: ${{ job.status }}
       icon_url: 'http://example.com/hoge.png'
     env:
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }} # required
@@ -145,6 +153,7 @@ Only legacy incoming webhook supported.
 steps:
   - uses: h3y6e/action-slack@v4
     with:
+      status: ${{ job.status }}
       channel: '#general'
     env:
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }} # required
@@ -210,6 +219,7 @@ jobs:
     steps:
       - uses: h3y6e/action-slack@v4
         with:
+          status: ${{ job.status }}
           job_name: Test # Match the name above.
           fields: job,took
         env:
