@@ -1,5 +1,21 @@
 # Changelog
 
+## [v4.0.8](https://github.com/h3y6e/action-slack/compare/v4.0.7...v4.0.8) - 2026-03-25
+- chore(deps): update dependency msw to v2.12.14 by @renovate[bot] in https://github.com/h3y6e/action-slack/pull/53
+- chore(deps): update dependency @slack/webhook to v7.0.8 by @renovate[bot] in https://github.com/h3y6e/action-slack/pull/52
+- chore(deps): update dependency undici to v7.24.5 by @renovate[bot] in https://github.com/h3y6e/action-slack/pull/58
+- chore(deps): update jdx/mise-action action to v4 by @renovate[bot] in https://github.com/h3y6e/action-slack/pull/64
+- chore(deps): update actions/create-github-app-token action to v3 by @renovate[bot] in https://github.com/h3y6e/action-slack/pull/63
+- chore(deps): update pnpm to v10.32.1 by @renovate[bot] in https://github.com/h3y6e/action-slack/pull/61
+- chore(deps): update dependency tsdown to v0.21.4 by @renovate[bot] in https://github.com/h3y6e/action-slack/pull/57
+- chore(deps): update node.js to v24.14.0 by @renovate[bot] in https://github.com/h3y6e/action-slack/pull/59
+- fix(deps): update dependency https-proxy-agent to v8 by @renovate[bot] in https://github.com/h3y6e/action-slack/pull/66
+- chore(deps): update dependency @types/node to v25.5.0 by @renovate[bot] in https://github.com/h3y6e/action-slack/pull/55
+- chore(deps): update dependency oxlint-tsgolint to v0.17.1 by @renovate[bot] in https://github.com/h3y6e/action-slack/pull/56
+- chore(deps): update vitest monorepo to v4.1.0 by @renovate[bot] in https://github.com/h3y6e/action-slack/pull/62
+- chore(deps): update oxlint monorepo by @renovate[bot] in https://github.com/h3y6e/action-slack/pull/60
+- chore(deps): update node.js to v24.14.1 by @renovate[bot] in https://github.com/h3y6e/action-slack/pull/67
+
 ## [v4.0.7](https://github.com/h3y6e/action-slack/compare/v4.0.6...v4.0.7) - 2026-03-25
 - docs: migrate from Jekyll to Astro Starlight by @h3y6e in https://github.com/h3y6e/action-slack/pull/49
 - docs: fix documentation to match actual code behavior by @h3y6e in https://github.com/h3y6e/action-slack/pull/51
