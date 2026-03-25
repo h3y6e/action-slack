@@ -1,10 +1,16 @@
-# Custom use case
+---
+title: Custom Use Case
+description: Send notifications in a custom format using custom_payload.
+sidebar:
+  label: Custom
+  order: 2
+---
 
-You will often want to send notifications in a format other than the one that action-slack has determined.  
+You will often want to send notifications in a format other than the one that action-slack has determined.
 In such a case, consider using `status: custom`.
 
-If you specify a payload in accordance with the slack specification, action-slack will notify you as it is.  
-Use `status: custom` and [custom_payload](../usage/with.md#custom_payload) to customize notifications to your liking can be sent.
+If you specify a payload in accordance with the slack specification, action-slack will notify you as it is.
+Use `status: custom` and [custom_payload](/action-slack/usage/with/#custom_payload) to customize notifications to your liking.
 
 ```yaml
 steps:
@@ -43,7 +49,8 @@ steps:
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }} # required
 ```
 
-As you can see, the JavaScript functionality is available in the custom_payload . (e.g. `toLowerCase()`)  
+As you can see, the JavaScript functionality is available in the custom_payload. (e.g. `toLowerCase()`)
+
 We have even more options for those who want to use custom notifications, but want to use the Fields feature.
 
 ```yaml
@@ -64,9 +71,7 @@ steps:
     if: always() # Pick up events even if the job fails or is canceled.
 ```
 
-You can access the values retrieved by Fields through environment variables.  
-See [Fields](../usage/fields.md) for the available environment variables.
+You can access the values retrieved by Fields through environment variables.
+See [Fields](/action-slack/usage/fields/) for the available environment variables.
 
-<img width="501" alt="custom" src="https://user-images.githubusercontent.com/8043276/85949864-2b3df300-b994-11ea-9388-f4ff1aebc292.png" />
-
-If there's a good format, I'd like to introduce it on this page from time to time.
+![custom](https://user-images.githubusercontent.com/8043276/85949864-2b3df300-b994-11ea-9388-f4ff1aebc292.png)
