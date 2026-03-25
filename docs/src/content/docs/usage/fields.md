@@ -8,13 +8,14 @@ sidebar:
 :::note
 Additional configuration is required to work with matrix.
 Don't forget to add `MATRIX_CONTEXT`.
-Not required if the fields do not contain jobs or tooks.
+Not required if the fields do not contain job or took.
 :::
 
 ```yaml
 steps:
   - uses: h3y6e/action-slack@v4
     with:
+      status: ${{ job.status }}
       fields: job,took
     env:
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }} # required
@@ -36,6 +37,7 @@ Corresponding types are as follows.
 | workflowRun | `AS_WORKFLOW_RUN`    | Generate a link to the present workflow run          |
 | message     | `AS_MESSAGE`         | commit message                                       |
 | author      | `AS_AUTHOR`          | The author who pushed                                |
+| action      | `AS_ACTION`          | Generate a checks page link from git sha             |
 | job         | `AS_JOB`             | Generate a job run link of the job that was executed |
 | took        | `AS_TOOK`            | Execution time for the job                           |
 | pullRequest | `AS_PULL_REQUEST`    | Pull Request title, number with link                 |
@@ -44,6 +46,7 @@ Corresponding types are as follows.
 steps:
   - uses: h3y6e/action-slack@v4
     with:
+      status: ${{ job.status }}
       fields: repo,commit
     env:
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }} # required
@@ -55,6 +58,7 @@ If you want all items, specify `all`.
 steps:
   - uses: h3y6e/action-slack@v4
     with:
+      status: ${{ job.status }}
       fields: all
     env:
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }} # required
@@ -86,6 +90,7 @@ jobs:
     steps:
       - uses: h3y6e/action-slack@v4
         with:
+          status: ${{ job.status }}
           job_name: test (${{ matrix.os }}, ${{ matrix.node }}) # named without `npm`
           fields: job,took
         env:

@@ -13,7 +13,7 @@ steps:
   - uses: h3y6e/action-slack@v4
     with:
       status: ${{ job.status }}
-      fields: repo,message,commit,author,action,eventName,ref,workflow,job,took,pullRequest # selectable (default: repo,message)
+      fields: repo,message,commit,author,action,eventName,ref,workflow,job,took,pullRequest # selectable (default: repo,commit)
     env:
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }} # required
     if: always() # Pick up events even if the job fails or is canceled.
