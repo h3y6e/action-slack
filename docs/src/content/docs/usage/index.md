@@ -1,4 +1,10 @@
-# Usage
+---
+title: Usage
+description: How to use action-slack in your GitHub Actions workflow.
+sidebar:
+  label: Overview
+  order: 1
+---
 
 ```yaml
 steps:
@@ -14,5 +20,5 @@ steps:
     if: always() # Pick up events even if the job fails or is canceled.
 ```
 
-- [With Parameters](./with.md)
-- [Fields](./fields.md)
+- [With Parameters](/action-slack/usage/with/)
+- [Fields](/action-slack/usage/fields/)

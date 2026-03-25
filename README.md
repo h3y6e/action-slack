@@ -6,7 +6,7 @@ You can notify Slack of GitHub Actions.
 
 ## Usage
 
-See [documentation](./docs/).
+See [documentation](https://h3y6e.github.io/action-slack/).
 
 ```yaml
 - uses: h3y6e/action-slack@v4

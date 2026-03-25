@@ -1,8 +1,15 @@
-# Fields
+---
+title: Fields
+description: Selectable notification fields for action-slack.
+sidebar:
+  order: 3
+---
 
-> **Note:** Additional configuration is required to work with matrix.
-> Don't forget to add `MATRIX_CONTEXT`.
-> Not required if the fields do not contain jobs or tooks.
+:::note
+Additional configuration is required to work with matrix.
+Don't forget to add `MATRIX_CONTEXT`.
+Not required if the fields do not contain jobs or tooks.
+:::
 
 ```yaml
 steps:
@@ -17,7 +24,7 @@ steps:
 If you have more than one, please enter it in csv format.
 Corresponding types are as follows.
 
-<img width="495" alt="success" src="https://user-images.githubusercontent.com/8043276/84587112-64844800-ae57-11ea-8007-7ce83a91dae3.png" />
+![success](https://user-images.githubusercontent.com/8043276/84587112-64844800-ae57-11ea-8007-7ce83a91dae3.png)
 
 | Field       | Environment Variable | Description                                          |
 | ----------- | -------------------- | ---------------------------------------------------- |
@@ -53,10 +60,12 @@ steps:
       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }} # required
 ```
 
-In either of the following cases, You must use the `job_name` parameter instead of the `MATRIX_CONTEXT`.
+## Matrix with job_name
+
+In either of the following cases, you must use the `job_name` parameter instead of the `MATRIX_CONTEXT`.
 
 1. Overwrite job name by `name` syntax
-1. Using `matrix` with `include`
+2. Using `matrix` with `include`
 
 Because when constructing the job name in the action-slack, the key specified by `include` is included in the `matrix` map.
 It does not match the actual job name.

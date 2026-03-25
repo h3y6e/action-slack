@@ -16,11 +16,6 @@ coverage/
 .env
 .env.*
 
-# Jekyll
-docs/_site/
-docs/.jekyll-cache/
-docs/.jekyll-metadata
-
 # OS metadata
 .DS_Store
 Thumbs.db
