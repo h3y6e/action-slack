@@ -1,5 +1,17 @@
 # Changelog
 
+## [v4.0.9](https://github.com/h3y6e/action-slack/compare/v4.0.8...v4.0.9) - 2026-05-12
+- chore(deps): update jdx/mise-action action to v4.0.1 by @renovate[bot] in https://github.com/h3y6e/action-slack/pull/73
+- chore(deps): update dependency @actions/github to v9.1.1 by @renovate[bot] in https://github.com/h3y6e/action-slack/pull/75
+- chore(deps): update dependency tsdown to v0.22.0 by @renovate[bot] in https://github.com/h3y6e/action-slack/pull/71
+- chore(deps): update dependency oxlint to v1.63.0 by @renovate[bot] in https://github.com/h3y6e/action-slack/pull/79
+- chore(deps): update dependency oxfmt to v0.48.0 by @renovate[bot] in https://github.com/h3y6e/action-slack/pull/78
+- chore(deps): update dependency msw to v2.14.5 by @renovate[bot] in https://github.com/h3y6e/action-slack/pull/77
+- chore(deps): update dependency @types/node to v25.6.2 by @renovate[bot] in https://github.com/h3y6e/action-slack/pull/76
+- chore(deps): update vitest monorepo to v4.1.5 by @renovate[bot] in https://github.com/h3y6e/action-slack/pull/74
+- chore(deps): update dependency @slack/webhook to v7.0.9 by @renovate[bot] in https://github.com/h3y6e/action-slack/pull/70
+- chore(deps): update dependency @actions/core to v3.0.1 by @renovate[bot] in https://github.com/h3y6e/action-slack/pull/68
+
 ## [v4.0.8](https://github.com/h3y6e/action-slack/compare/v4.0.7...v4.0.8) - 2026-03-25
 - chore(deps): update dependency msw to v2.12.14 by @renovate[bot] in https://github.com/h3y6e/action-slack/pull/53
 - chore(deps): update dependency @slack/webhook to v7.0.8 by @renovate[bot] in https://github.com/h3y6e/action-slack/pull/52
