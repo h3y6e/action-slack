@@ -5,7 +5,7 @@
 experimental = true
 
 [tools]
-node = "24.14.1"
+node = "24.16.0"
 
 [hooks]
 postinstall = "npx corepack enable pnpm"
