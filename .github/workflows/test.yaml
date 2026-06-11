@@ -12,7 +12,7 @@ jobs:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       - uses: ./.github/actions/setup
       - run: pnpm test
-      - uses: h3y6e/action-slack@v4
+      - uses: h3y6e/action-slack@v4.0.9
         with:
           status: ${{ job.status }}
           fields: repo,message,commit,author,action,job,took,ref,workflowRun,pullRequest
