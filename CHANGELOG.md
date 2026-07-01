@@ -1,5 +1,45 @@
 # Changelog
 
+## [v4.0.10](https://github.com/h3y6e/action-slack/compare/v4.0.9...v4.0.10) - 2026-07-01
+
+- chore(deps): update actions/cache action to v5.0.5 by @renovate[bot] in https://github.com/h3y6e/action-slack/pull/82
+- chore(deps): update actions/checkout action to v6.0.2 by @renovate[bot] in https://github.com/h3y6e/action-slack/pull/83
+- chore(deps): update actions/deploy-pages action to v4.0.5 by @renovate[bot] in https://github.com/h3y6e/action-slack/pull/84
+- chore(deps): update actions/create-github-app-token action to v3.2.0 by @renovate[bot] in https://github.com/h3y6e/action-slack/pull/88
+- chore(deps): update actions/upload-pages-artifact action to v5 by @renovate[bot] in https://github.com/h3y6e/action-slack/pull/102
+- chore(deps): update actions/configure-pages action to v6 by @renovate[bot] in https://github.com/h3y6e/action-slack/pull/100
+- chore(deps): update node.js to v24.16.0 by @renovate[bot] in https://github.com/h3y6e/action-slack/pull/95
+- fix(deps): update astro monorepo to ~6.4.0 by @renovate[bot] in https://github.com/h3y6e/action-slack/pull/99
+- chore(deps): update songmu/tagpr action to v1.19.0 by @renovate[bot] in https://github.com/h3y6e/action-slack/pull/97
+- chore(deps): update dependency undici to v7.27.0 by @renovate[bot] in https://github.com/h3y6e/action-slack/pull/94
+- chore(deps): update dependency semver to v7.8.1 by @renovate[bot] in https://github.com/h3y6e/action-slack/pull/93
+- chore(deps): update dependency oxlint-tsgolint to v0.23.0 by @renovate[bot] in https://github.com/h3y6e/action-slack/pull/92
+- chore(deps): update dependency oxfmt to v0.53.0 by @renovate[bot] in https://github.com/h3y6e/action-slack/pull/90
+- fix(deps): update dependency https-proxy-agent to v9 by @renovate[bot] in https://github.com/h3y6e/action-slack/pull/106
+- chore(deps): update actions/deploy-pages action to v5 by @renovate[bot] in https://github.com/h3y6e/action-slack/pull/101
+- chore(deps): update dependency msw to v2.14.6 by @renovate[bot] in https://github.com/h3y6e/action-slack/pull/85
+- chore(deps): update pnpm to v10.34.1 by @renovate[bot] in https://github.com/h3y6e/action-slack/pull/96
+- chore(deps): update dependency tsdown to v0.22.1 by @renovate[bot] in https://github.com/h3y6e/action-slack/pull/86
+- fix(deps): update dependency @astrojs/starlight to ~0.39.0 by @renovate[bot] in https://github.com/h3y6e/action-slack/pull/98
+- chore(deps): update oxlint monorepo to v1.68.0 by @renovate[bot] in https://github.com/h3y6e/action-slack/pull/91
+- chore(deps): update dependency typescript to v6 by @renovate[bot] in https://github.com/h3y6e/action-slack/pull/103
+- chore(deps): update dependency @types/node to v25.9.1 by @renovate[bot] in https://github.com/h3y6e/action-slack/pull/89
+- chore(deps): update vitest monorepo to v4.1.8 by @renovate[bot] in https://github.com/h3y6e/action-slack/pull/87
+- chore(deps): update songmu/tagpr action to v1.20.0 by @renovate[bot] in https://github.com/h3y6e/action-slack/pull/124
+- chore(deps): update actions/checkout action to v7 by @renovate[bot] in https://github.com/h3y6e/action-slack/pull/122
+- chore(deps): update node.js to v24.18.0 by @renovate[bot] in https://github.com/h3y6e/action-slack/pull/120
+- chore(deps): update jdx/mise-action action to v4.2.0 by @renovate[bot] in https://github.com/h3y6e/action-slack/pull/119
+- chore(deps): update dependency oxlint to v1.71.0 by @renovate[bot] in https://github.com/h3y6e/action-slack/pull/117
+- chore(deps): update dependency @types/node to v25.9.4 by @renovate[bot] in https://github.com/h3y6e/action-slack/pull/109
+- chore(deps): update dependency undici to v7.28.0 by @renovate[bot] in https://github.com/h3y6e/action-slack/pull/118
+- fix(deps): update dependency astro to v7 by @renovate[bot] in https://github.com/h3y6e/action-slack/pull/123
+- chore(deps): update dependency oxfmt to v0.56.0 by @renovate[bot] in https://github.com/h3y6e/action-slack/pull/116
+- chore(deps): update dependency tsdown to v0.22.3 by @renovate[bot] in https://github.com/h3y6e/action-slack/pull/112
+- fix(deps): update dependency @astrojs/starlight to ~0.41.0 by @renovate[bot] in https://github.com/h3y6e/action-slack/pull/121
+- chore(deps): update dependency https-proxy-agent to v9.1.0 by @renovate[bot] in https://github.com/h3y6e/action-slack/pull/115
+- chore(deps): update pnpm to v10.34.4 by @renovate[bot] in https://github.com/h3y6e/action-slack/pull/113
+- chore(deps): update vitest monorepo to v4.1.9 by @renovate[bot] in https://github.com/h3y6e/action-slack/pull/114
+
 ## [v4.0.9](https://github.com/h3y6e/action-slack/compare/v4.0.8...v4.0.9) - 2026-05-12
 - chore(deps): update jdx/mise-action action to v4.0.1 by @renovate[bot] in https://github.com/h3y6e/action-slack/pull/73
 - chore(deps): update dependency @actions/github to v9.1.1 by @renovate[bot] in https://github.com/h3y6e/action-slack/pull/75
