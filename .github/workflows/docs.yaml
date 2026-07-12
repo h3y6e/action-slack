@@ -35,7 +35,7 @@ jobs:
     steps:
       - id: deployment
         uses: actions/deploy-pages@cd2ce8fcbc39b97be8ca5fce6e763baed58fa128 # v5.0.0
-      - uses: h3y6e/action-slack@v4
+      - uses: h3y6e/action-slack@v4.0.9
         with:
           status: ${{ job.status }}
           text: 'Deployed docs: ${{ steps.deployment.outputs.page_url }}'
