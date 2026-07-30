@@ -17,8 +17,11 @@ export default defineConfig({
         },
       ],
       sidebar: [
-        { label: 'Usage', autogenerate: { directory: 'usage' } },
-        { label: 'Use Cases', autogenerate: { directory: 'usecase' } },
+        { label: 'Usage', items: [{ autogenerate: { directory: 'usage' } }] },
+        {
+          label: 'Use Cases',
+          items: [{ autogenerate: { directory: 'usecase' } }],
+        },
       ],
       editLink: {
         baseUrl: 'https://github.com/h3y6e/action-slack/edit/main/docs/',
