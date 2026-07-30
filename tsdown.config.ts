@@ -9,6 +9,8 @@ export default defineConfig({
   clean: true,
   minify: true,
   treeshake: true,
-  noExternal: [/.*/],
-  inlineOnly: false,
+  deps: {
+    alwaysBundle: [/.*/],
+    onlyBundle: false,
+  },
 });
