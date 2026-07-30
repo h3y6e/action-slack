@@ -4,6 +4,11 @@ import type { With } from './client';
 
 const mockSend = vi.hoisted(() => vi.fn().mockResolvedValue(undefined));
 const mockIncomingWebhookConstructor = vi.hoisted(() => vi.fn());
+const mockSetGlobalProxyFromEnv = vi.hoisted(() => vi.fn());
+
+vi.mock('node:http', () => ({
+  setGlobalProxyFromEnv: mockSetGlobalProxyFromEnv,
+}));
 
 vi.mock('@actions/core', () => ({
   debug: vi.fn(),
@@ -206,50 +211,9 @@ describe('Client', () => {
   // ── proxy ──────────────────────────────────────────────────────────
 
   describe('proxy', () => {
-    let originalHttpsProxy: string | undefined;
-    let originalHTTPSProxy: string | undefined;
-
-    beforeEach(() => {
-      originalHttpsProxy = process.env.https_proxy;
-      originalHTTPSProxy = process.env.HTTPS_PROXY;
-    });
-
-    afterEach(() => {
-      if (originalHttpsProxy === undefined) {
-        delete process.env.https_proxy;
-      } else {
-        process.env.https_proxy = originalHttpsProxy;
-      }
-      if (originalHTTPSProxy === undefined) {
-        delete process.env.HTTPS_PROXY;
-      } else {
-        process.env.HTTPS_PROXY = originalHTTPSProxy;
-      }
-    });
-
-    it('passes agent to IncomingWebhook when https_proxy is set', () => {
-      process.env.https_proxy = 'http://proxy:8080';
+    it('delegates proxy configuration to http.setGlobalProxyFromEnv', () => {
       createClient();
-      expect(mockIncomingWebhookConstructor).toHaveBeenCalledOnce();
-      const options = mockIncomingWebhookConstructor.mock.calls[0][1];
-      expect(options?.agent).toBeDefined();
-    });
-
-    it('passes agent to IncomingWebhook when HTTPS_PROXY is set', () => {
-      process.env.HTTPS_PROXY = 'http://proxy:8080';
-      createClient();
-      expect(mockIncomingWebhookConstructor).toHaveBeenCalledOnce();
-      const options = mockIncomingWebhookConstructor.mock.calls[0][1];
-      expect(options?.agent).toBeDefined();
-    });
-
-    it('does not pass agent when no proxy env var is set', () => {
-      delete process.env.https_proxy;
-      delete process.env.HTTPS_PROXY;
-      createClient();
-      expect(mockIncomingWebhookConstructor).toHaveBeenCalledOnce();
-      const options = mockIncomingWebhookConstructor.mock.calls[0][1];
-      expect(options?.agent).toBeUndefined();
+      expect(mockSetGlobalProxyFromEnv).toHaveBeenCalledOnce();
     });
   });
 });

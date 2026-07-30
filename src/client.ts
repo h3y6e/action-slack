@@ -1,13 +1,9 @@
 import * as core from '@actions/core';
 import { context, getOctokit } from '@actions/github';
 import { GitHub } from '@actions/github/lib/utils';
-import {
-  IncomingWebhook,
-  IncomingWebhookSendArguments,
-  IncomingWebhookDefaultArguments,
-} from '@slack/webhook';
+import { IncomingWebhook, IncomingWebhookSendArguments } from '@slack/webhook';
 import { FieldFactory } from './fields';
-import { HttpsProxyAgent } from 'https-proxy-agent';
+import { setGlobalProxyFromEnv } from 'node:http';
 
 export const Success = 'success';
 type SuccessType = 'success';
@@ -67,13 +63,12 @@ export class Client {
       throw new Error('Specify secrets.SLACK_WEBHOOK_URL');
     }
 
-    const options: IncomingWebhookDefaultArguments = {};
-    const proxy = process.env.https_proxy || process.env.HTTPS_PROXY;
-    if (proxy) {
-      options.agent = new HttpsProxyAgent(proxy);
-    }
+    // Route all outgoing HTTP(S)/fetch traffic in this process through the
+    // proxy configured via https_proxy/HTTPS_PROXY (a no-op if unset).
+    // See: https://nodejs.org/api/http.html#httpsetglobalproxyfromenvproxyenv
+    setGlobalProxyFromEnv();
 
-    this.webhook = new IncomingWebhook(webhookUrl, options);
+    this.webhook = new IncomingWebhook(webhookUrl);
     this.fieldFactory = new FieldFactory(
       this.with.fields,
       this.jobName,
