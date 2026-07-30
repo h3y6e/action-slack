@@ -1,2 +1,7 @@
 packages:
+  - .
   - docs
+allowBuilds:
+  esbuild: false
+  msw: false
+  sharp: false
