@@ -36,7 +36,7 @@
   "devDependencies": {
     "@types/node": "26.1.2",
     "@types/semver": "7.7.1",
-    "@vitest/coverage-v8": "4.1.10",
+    "@vitest/coverage-v8": "4.1.11",
     "msw": "2.15.0",
     "oxfmt": "0.61.0",
     "oxlint": "1.76.0",
@@ -44,7 +44,7 @@
     "tsdown": "0.22.14",
     "typescript": "7.0.2",
     "undici": "6.25.0",
-    "vitest": "4.1.10"
+    "vitest": "4.1.11"
   },
   "devEngines": {
     "runtime": {
