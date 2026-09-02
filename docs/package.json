@@ -10,6 +10,6 @@
   "dependencies": {
     "@astrojs/starlight": "~0.41.5",
     "@catppuccin/starlight": "~2.1.0",
-    "astro": "~7.1.5"
+    "astro": "~7.2.0"
   }
 }
