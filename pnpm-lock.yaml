@@ -35,7 +35,7 @@ importers:
         version: 2.15.0(@types/node@26.1.2)(typescript@7.0.2)
       node:
         specifier: runtime:24.x
-        version: runtime:24.18.1
+        version: runtime:24.20.0
       oxfmt:
         specifier: 0.61.0
         version: 0.61.0
@@ -62,10 +62,10 @@ importers:
     dependencies:
       '@astrojs/starlight':
         specifier: ~0.41.5
-        version: 0.41.5(@astrojs/markdown-remark@7.2.2(supports-color@7.2.0))(astro@7.1.5(@astrojs/markdown-remark@7.2.2(supports-color@7.2.0))(@emnapi/core@2.0.0-alpha.3)(@emnapi/runtime@2.0.0-alpha.3)(@types/node@26.1.2)(rollup@4.57.1))(supports-color@7.2.0)(typescript@7.0.2)
+        version: 0.41.11(@astrojs/markdown-remark@7.2.2(supports-color@7.2.0))(astro@7.1.5(@astrojs/markdown-remark@7.2.2(supports-color@7.2.0))(@emnapi/core@2.0.0-alpha.3)(@emnapi/runtime@2.0.0-alpha.3)(@types/node@26.1.2)(rollup@4.57.1))(supports-color@7.2.0)(typescript@7.0.2)
       '@catppuccin/starlight':
         specifier: ~2.1.0
-        version: 2.1.0(@astrojs/starlight@0.41.5(@astrojs/markdown-remark@7.2.2(supports-color@7.2.0))(astro@7.1.5(@astrojs/markdown-remark@7.2.2(supports-color@7.2.0))(@emnapi/core@2.0.0-alpha.3)(@emnapi/runtime@2.0.0-alpha.3)(@types/node@26.1.2)(rollup@4.57.1))(supports-color@7.2.0)(typescript@7.0.2))(astro@7.1.5(@astrojs/markdown-remark@7.2.2(supports-color@7.2.0))(@emnapi/core@2.0.0-alpha.3)(@emnapi/runtime@2.0.0-alpha.3)(@types/node@26.1.2)(rollup@4.57.1))
+        version: 2.1.0(@astrojs/starlight@0.41.11(@astrojs/markdown-remark@7.2.2(supports-color@7.2.0))(astro@7.1.5(@astrojs/markdown-remark@7.2.2(supports-color@7.2.0))(@emnapi/core@2.0.0-alpha.3)(@emnapi/runtime@2.0.0-alpha.3)(@types/node@26.1.2)(rollup@4.57.1))(supports-color@7.2.0)(typescript@7.0.2))(astro@7.1.5(@astrojs/markdown-remark@7.2.2(supports-color@7.2.0))(@emnapi/core@2.0.0-alpha.3)(@emnapi/runtime@2.0.0-alpha.3)(@types/node@26.1.2)(rollup@4.57.1))
       astro:
         specifier: ~7.1.5
         version: 7.1.5(@astrojs/markdown-remark@7.2.2(supports-color@7.2.0))(@emnapi/core@2.0.0-alpha.3)(@emnapi/runtime@2.0.0-alpha.3)(@types/node@26.1.2)(rollup@4.57.1)
@@ -181,8 +181,8 @@ packages:
   '@astrojs/sitemap@3.7.3':
     resolution: {integrity: sha512-f8euLVsyeAmAkSm/1M2Kb8sL8byQmfgbvBNaHFItCheTj/IpiJYSEWVcqDHZ/yEHxiS7+w87mQkzwZaPHmk5GA==}
 
-  '@astrojs/starlight@0.41.5':
-    resolution: {integrity: sha512-BNkyysByeqk9cXGNnd1fC1+kc9rrllo1Df/XD34wQg/I5HUX1Bc+F91aTktg17sapQs+mafzWSRgmURRyCNLKA==}
+  '@astrojs/starlight@0.41.11':
+    resolution: {integrity: sha512-hM95Mbsl4l60SBwaNQA/HTxpOLGfeB5EfR9qY3kr0SsAVKUspCssjO0RVBsLiPAE6EA5xuORcCoz/Q6DTX+MuQ==}
     peerDependencies:
       '@astrojs/markdown-remark': ^7.2.0
       astro: ^7.0.2
@@ -2779,7 +2779,7 @@ packages:
   node-mock-http@1.0.5:
     resolution: {integrity: sha512-KQyt/wLjG3TAc7DOUhpqWzgd4ERxR80JOlTK5VE5R1S12IaPVN5qkj4klBce9HPG1Njuup4Sb5bljaT34lIyjw==}
 
-  node@runtime:24.18.1:
+  node@runtime:24.20.0:
     resolution:
       type: variations
       variants:
@@ -2787,9 +2787,9 @@ packages:
             archive: tarball
             bin:
               node: bin/node
-            integrity: sha256-PHYkDAe58DV0pc+O2LoZ6NuJJxlDgXsaS5TeQ8l6nmY=
+            integrity: sha256-FLW9etQKtfRxX7Ti+WSFjYINlCX+KR09ZfmJJua4nB4=
             type: binary
-            url: https://nodejs.org/download/release/v24.18.1/node-v24.18.1-aix-ppc64.tar.gz
+            url: https://nodejs.org/download/release/v24.20.0/node-v24.20.0-aix-ppc64.tar.gz
           targets:
             - cpu: ppc64
               os: aix
@@ -2797,9 +2797,9 @@ packages:
             archive: tarball
             bin:
               node: bin/node
-            integrity: sha256-6wL3+rltPWfeQMXshWYJb8tMICZyh4doOuWpfrYSuUE=
+            integrity: sha256-QOVgfl7LPbkZJyN3baLXXZZiYPx0p6nnMcG9Z92pa8g=
             type: binary
-            url: https://nodejs.org/download/release/v24.18.1/node-v24.18.1-darwin-arm64.tar.gz
+            url: https://nodejs.org/download/release/v24.20.0/node-v24.20.0-darwin-arm64.tar.gz
           targets:
             - cpu: arm64
               os: darwin
@@ -2807,9 +2807,9 @@ packages:
             archive: tarball
             bin:
               node: bin/node
-            integrity: sha256-b7IPzqy7FXwvlYJbgN9KRUoPbYHNzXu4HurpFH4Oduw=
+            integrity: sha256-nlsmRM8Qe++2rvymdrltMpa8EBOAlvAi7TeNYjPtgfQ=
             type: binary
-            url: https://nodejs.org/download/release/v24.18.1/node-v24.18.1-darwin-x64.tar.gz
+            url: https://nodejs.org/download/release/v24.20.0/node-v24.20.0-darwin-x64.tar.gz
           targets:
             - cpu: x64
               os: darwin
@@ -2817,9 +2817,9 @@ packages:
             archive: tarball
             bin:
               node: bin/node
-            integrity: sha256-3yJFVaCDuRjkYmDMlpg4UBufmocUDBGV5blZe1bV2uI=
+            integrity: sha256-NRVgPiSHh5o5vHVxbxoq/9AnUAxkulDoRc9yyzMhkBM=
             type: binary
-            url: https://nodejs.org/download/release/v24.18.1/node-v24.18.1-linux-arm64.tar.gz
+            url: https://nodejs.org/download/release/v24.20.0/node-v24.20.0-linux-arm64.tar.gz
           targets:
             - cpu: arm64
               os: linux
@@ -2827,9 +2827,9 @@ packages:
             archive: tarball
             bin:
               node: bin/node
-            integrity: sha256-SoxiCbo6WuqExAIB2JZiTtcGuXmabcVMvZZUM6Npo9A=
+            integrity: sha256-pzSzbI0dFs5FXA65wymwfdEhwshVQ1UGSphhvJbDrcw=
             type: binary
-            url: https://nodejs.org/download/release/v24.18.1/node-v24.18.1-linux-ppc64le.tar.gz
+            url: https://nodejs.org/download/release/v24.20.0/node-v24.20.0-linux-ppc64le.tar.gz
           targets:
             - cpu: ppc64le
               os: linux
@@ -2837,9 +2837,9 @@ packages:
             archive: tarball
             bin:
               node: bin/node
-            integrity: sha256-Yq2FDv76mrQqPpAdjg3obXG/nIoMOJ2r7SSPHslZDFo=
+            integrity: sha256-2MIktG7wHweKUj2bfbeSgjBvrigemGoVotv/6UfFMB4=
             type: binary
-            url: https://nodejs.org/download/release/v24.18.1/node-v24.18.1-linux-s390x.tar.gz
+            url: https://nodejs.org/download/release/v24.20.0/node-v24.20.0-linux-s390x.tar.gz
           targets:
             - cpu: s390x
               os: linux
@@ -2847,9 +2847,20 @@ packages:
             archive: tarball
             bin:
               node: bin/node
-            integrity: sha256-n162rCGEWmbEk8kaJTsdoy/WhOiem3IC1JNpgjNr5Mo=
+            integrity: sha256-1ubRu7mtSssW1YC4m+ipyafkkJJuk708MKINRuFSv4o=
             type: binary
-            url: https://nodejs.org/download/release/v24.18.1/node-v24.18.1-linux-x64.tar.gz
+            url: https://nodejs.org/download/release/v24.20.0/node-v24.20.0-linux-x64-musl.tar.gz
+          targets:
+            - cpu: x64
+              os: linux
+              libc: musl
+        - resolution:
+            archive: tarball
+            bin:
+              node: bin/node
+            integrity: sha256-hV1YH4pOsagRfjQm3iX+AncFkv68+zE2mu4f+/7p6Ow=
+            type: binary
+            url: https://nodejs.org/download/release/v24.20.0/node-v24.20.0-linux-x64.tar.gz
           targets:
             - cpu: x64
               os: linux
@@ -2857,10 +2868,10 @@ packages:
             archive: zip
             bin:
               node: node.exe
-            integrity: sha256-/7x9PhuvaAT3Qx/5Txm5qIWmUFaMk+pMyxuwA49q+CU=
-            prefix: node-v24.18.1-win-arm64
+            integrity: sha256-McZ5l0TeilRgFkMJgEDGjDaX5WyU5AfWHQ5fpfNBkdc=
+            prefix: node-v24.20.0-win-arm64
             type: binary
-            url: https://nodejs.org/download/release/v24.18.1/node-v24.18.1-win-arm64.zip
+            url: https://nodejs.org/download/release/v24.20.0/node-v24.20.0-win-arm64.zip
           targets:
             - cpu: arm64
               os: win32
@@ -2868,10 +2879,10 @@ packages:
             archive: zip
             bin:
               node: node.exe
-            integrity: sha256-7Fa4SnVRiTqyMk69/cSrl0pjtHgRYmALaKEpPMPlN2U=
-            prefix: node-v24.18.1-win-x64
+            integrity: sha256-bKyf+8qPakcJHktcdy4GBgScOHHLZ9kAwM7d5jDlRbo=
+            prefix: node-v24.20.0-win-x64
             type: binary
-            url: https://nodejs.org/download/release/v24.18.1/node-v24.18.1-win-x64.zip
+            url: https://nodejs.org/download/release/v24.20.0/node-v24.20.0-win-x64.zip
           targets:
             - cpu: x64
               os: win32
@@ -2879,9 +2890,9 @@ packages:
             archive: tarball
             bin:
               node: bin/node
-            integrity: sha256-rhtkV+24df2YEws3yFPlGlOsDMQIUOzM1JC2HFo1WPo=
+            integrity: sha256-LIxQfMsPIIEtlSa6jKRUsWUqre9o/IutBvB/sRIt0e8=
             type: binary
-            url: https://unofficial-builds.nodejs.org/download/release/v24.18.1/node-v24.18.1-linux-arm64-musl.tar.gz
+            url: https://unofficial-builds.nodejs.org/download/release/v24.20.0/node-v24.20.0-linux-arm64-musl.tar.gz
           targets:
             - cpu: arm64
               os: linux
@@ -2890,14 +2901,14 @@ packages:
             archive: tarball
             bin:
               node: bin/node
-            integrity: sha256-aWl5yu+SUFrXVmo2dMqak9hVjigvNOeJkYHAMhghrl8=
+            integrity: sha256-muE5n+9L2JkOFXc84TJ7M2oguel9jHVJ9PQspzxD9WI=
             type: binary
-            url: https://unofficial-builds.nodejs.org/download/release/v24.18.1/node-v24.18.1-linux-x64-musl.tar.gz
+            url: https://unofficial-builds.nodejs.org/download/release/v24.20.0/node-v24.20.0-linux-x64-musl.tar.gz
           targets:
             - cpu: x64
               os: linux
               libc: musl
-    version: 24.18.1
+    version: 24.20.0
     hasBin: true
 
   normalize-path@3.0.0:
@@ -3833,7 +3844,7 @@ snapshots:
       stream-replace-string: 2.0.0
       zod: 4.4.3
 
-  '@astrojs/starlight@0.41.5(@astrojs/markdown-remark@7.2.2(supports-color@7.2.0))(astro@7.1.5(@astrojs/markdown-remark@7.2.2(supports-color@7.2.0))(@emnapi/core@2.0.0-alpha.3)(@emnapi/runtime@2.0.0-alpha.3)(@types/node@26.1.2)(rollup@4.57.1))(supports-color@7.2.0)(typescript@7.0.2)':
+  '@astrojs/starlight@0.41.11(@astrojs/markdown-remark@7.2.2(supports-color@7.2.0))(astro@7.1.5(@astrojs/markdown-remark@7.2.2(supports-color@7.2.0))(@emnapi/core@2.0.0-alpha.3)(@emnapi/runtime@2.0.0-alpha.3)(@types/node@26.1.2)(rollup@4.57.1))(supports-color@7.2.0)(typescript@7.0.2)':
     dependencies:
       '@astrojs/markdown-satteri': 0.3.5
       '@astrojs/mdx': 7.0.5(@astrojs/markdown-satteri@0.3.5)(astro@7.1.5(@astrojs/markdown-remark@7.2.2(supports-color@7.2.0))(@emnapi/core@2.0.0-alpha.3)(@emnapi/runtime@2.0.0-alpha.3)(@types/node@26.1.2)(rollup@4.57.1))(supports-color@7.2.0)
@@ -3928,9 +3939,9 @@ snapshots:
     dependencies:
       fontkitten: 1.0.3
 
-  '@catppuccin/starlight@2.1.0(@astrojs/starlight@0.41.5(@astrojs/markdown-remark@7.2.2(supports-color@7.2.0))(astro@7.1.5(@astrojs/markdown-remark@7.2.2(supports-color@7.2.0))(@emnapi/core@2.0.0-alpha.3)(@emnapi/runtime@2.0.0-alpha.3)(@types/node@26.1.2)(rollup@4.57.1))(supports-color@7.2.0)(typescript@7.0.2))(astro@7.1.5(@astrojs/markdown-remark@7.2.2(supports-color@7.2.0))(@emnapi/core@2.0.0-alpha.3)(@emnapi/runtime@2.0.0-alpha.3)(@types/node@26.1.2)(rollup@4.57.1))':
+  '@catppuccin/starlight@2.1.0(@astrojs/starlight@0.41.11(@astrojs/markdown-remark@7.2.2(supports-color@7.2.0))(astro@7.1.5(@astrojs/markdown-remark@7.2.2(supports-color@7.2.0))(@emnapi/core@2.0.0-alpha.3)(@emnapi/runtime@2.0.0-alpha.3)(@types/node@26.1.2)(rollup@4.57.1))(supports-color@7.2.0)(typescript@7.0.2))(astro@7.1.5(@astrojs/markdown-remark@7.2.2(supports-color@7.2.0))(@emnapi/core@2.0.0-alpha.3)(@emnapi/runtime@2.0.0-alpha.3)(@types/node@26.1.2)(rollup@4.57.1))':
     dependencies:
-      '@astrojs/starlight': 0.41.5(@astrojs/markdown-remark@7.2.2(supports-color@7.2.0))(astro@7.1.5(@astrojs/markdown-remark@7.2.2(supports-color@7.2.0))(@emnapi/core@2.0.0-alpha.3)(@emnapi/runtime@2.0.0-alpha.3)(@types/node@26.1.2)(rollup@4.57.1))(supports-color@7.2.0)(typescript@7.0.2)
+      '@astrojs/starlight': 0.41.11(@astrojs/markdown-remark@7.2.2(supports-color@7.2.0))(astro@7.1.5(@astrojs/markdown-remark@7.2.2(supports-color@7.2.0))(@emnapi/core@2.0.0-alpha.3)(@emnapi/runtime@2.0.0-alpha.3)(@types/node@26.1.2)(rollup@4.57.1))(supports-color@7.2.0)(typescript@7.0.2)
       astro: 7.1.5(@astrojs/markdown-remark@7.2.2(supports-color@7.2.0))(@emnapi/core@2.0.0-alpha.3)(@emnapi/runtime@2.0.0-alpha.3)(@types/node@26.1.2)(rollup@4.57.1)
 
   '@clack/core@1.4.3':
@@ -6366,7 +6377,7 @@ snapshots:
 
   node-mock-http@1.0.5: {}
 
-  node@runtime:24.18.1: {}
+  node@runtime:24.20.0: {}
 
   normalize-path@3.0.0: {}
 
