@@ -14,6 +14,8 @@ type CancelledType = 'cancelled';
 export const Custom = 'custom';
 export const Always = 'always';
 type AlwaysType = 'always';
+export const Fixed = 'fixed';
+type FixedType = 'fixed';
 
 export type Octokit = InstanceType<typeof GitHub>;
 
@@ -31,6 +33,7 @@ export interface With {
   success_message: string;
   cancelled_message: string;
   failure_message: string;
+  fixed_message: string;
 }
 
 export interface Field {
@@ -118,6 +121,8 @@ export class Client {
         return 'warning';
       case Failure:
         return 'danger';
+      case Fixed:
+        return '#2196F3';
     }
     throw new Error(`invalid status: ${this.with.status}`);
   }
@@ -137,11 +142,17 @@ export class Client {
         text += this.mentionText(Failure);
         text += this.insertText(this.with.failure_message, value);
         return text;
+      case Fixed:
+        text += this.mentionText(Fixed);
+        text += this.insertText(this.with.fixed_message, value);
+        return text;
     }
     throw new Error(`invalid status: ${this.with.status}`);
   }
 
-  mentionText(status: SuccessType | FailureType | CancelledType | AlwaysType) {
+  mentionText(
+    status: SuccessType | FailureType | CancelledType | AlwaysType | FixedType,
+  ) {
     const { mention, if_mention } = this.with;
     if (!if_mention.includes(status) && if_mention !== Always) {
       return '';

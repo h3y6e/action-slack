@@ -106,6 +106,25 @@ jobs:
           SLACK_WEBHOOK_URL: ${{ secrets.E2E_SLACK_WEBHOOK_URL }}
       - run: sleep 1
 
+      # -- notify patterns --
+      - name: notify - failure,fixed with failure
+        uses: ./
+        with:
+          status: failure
+          notify: failure,fixed
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.E2E_SLACK_WEBHOOK_URL }}
+      - run: sleep 1
+
+      - name: notify - failure,fixed with success
+        uses: ./
+        with:
+          status: success
+          notify: failure,fixed
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.E2E_SLACK_WEBHOOK_URL }}
+      - run: sleep 1
+
       # -- fields patterns --
       - name: fields - default (repo,commit)
         uses: ./
