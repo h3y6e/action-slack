@@ -30,18 +30,18 @@
   "dependencies": {
     "@actions/core": "^3.0.0",
     "@actions/github": "^9.0.0",
-    "@slack/webhook": "^8.0.0",
+    "@slack/webhook": "^8.0.2",
     "semver": "^7.7.4"
   },
   "devDependencies": {
     "@types/node": "26.1.2",
-    "@types/semver": "7.7.1",
+    "@types/semver": "7.8.0",
     "@vitest/coverage-v8": "4.1.10",
     "msw": "2.15.0",
-    "oxfmt": "0.61.0",
-    "oxlint": "1.76.0",
+    "oxfmt": "0.68.0",
+    "oxlint": "1.83.0",
     "oxlint-tsgolint": "7.0.2001",
-    "tsdown": "0.22.14",
+    "tsdown": "0.23.0",
     "typescript": "7.0.2",
     "undici": "6.25.0",
     "vitest": "4.1.10"
