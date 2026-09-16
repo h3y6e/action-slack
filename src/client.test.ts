@@ -1,5 +1,5 @@
 import { vi, describe, it, expect, beforeEach, afterEach } from 'vitest';
-import { Client, Success, Failure, Cancelled } from './client';
+import { Client, Success, Failure, Cancelled, Fixed } from './client';
 import type { With } from './client';
 
 const mockSend = vi.hoisted(() => vi.fn().mockResolvedValue(undefined));
@@ -64,6 +64,7 @@ const defaultWith: With = {
   success_message: 'Succeeded GitHub Actions',
   cancelled_message: 'Cancelled GitHub Actions',
   failure_message: 'Failed GitHub Actions',
+  fixed_message: 'Fixed GitHub Actions',
 };
 
 function createClient(props: Partial<With> = {}) {
@@ -101,6 +102,10 @@ describe('Client', () => {
   // ── injectColor() ──────────────────────────────────────────────────
 
   describe('injectColor()', () => {
+    it('returns blue for the fixed status', () => {
+      expect(createClient({ status: Fixed }).injectColor()).toBe('#2196F3');
+    });
+
     it('throws for an unknown status', () => {
       expect(() => createClient({ status: 'unknown' }).injectColor()).toThrow(
         'invalid status: unknown',
@@ -138,6 +143,19 @@ describe('Client', () => {
       });
       expect(client.mentionText(Cancelled)).toBe('');
     });
+
+    it('mentions fixed when if_mention contains fixed', () => {
+      const client = createClient({
+        mention: 'user1',
+        if_mention: 'failure,fixed',
+      });
+      expect(client.mentionText(Fixed)).toBe('<@user1> ');
+    });
+
+    it('does not mention fixed when if_mention contains only success', () => {
+      const client = createClient({ mention: 'user1', if_mention: 'success' });
+      expect(client.mentionText(Fixed)).toBe('');
+    });
   });
 
   // ── injectText() ───────────────────────────────────────────────────
@@ -152,6 +170,12 @@ describe('Client', () => {
     it('uses cancelled_message when text is empty', () => {
       expect(createClient({ status: Cancelled }).injectText('')).toBe(
         'Cancelled GitHub Actions',
+      );
+    });
+
+    it('uses fixed_message when text is empty', () => {
+      expect(createClient({ status: Fixed }).injectText('')).toBe(
+        'Fixed GitHub Actions',
       );
     });
 

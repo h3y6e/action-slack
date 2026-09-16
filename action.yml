@@ -5,6 +5,15 @@ inputs:
   status:
     description: Specify success or failure or cancelled or custom.
     required: true
+  notify:
+    description: |
+      Specify all or the statuses to notify in csv format: success, failure, cancelled, fixed.
+      e.g. failure,fixed
+      When fixed is included, a success is notified as fixed if the previous run of the same workflow and branch failed.
+      all notifies for every status but does not detect fixes, and cannot be combined with other statuses.
+      status: custom is always notified.
+    default: all
+    required: false
   fields:
     description: |
       You can choose the items you want to add to the fields at the time of notification.
@@ -25,7 +34,7 @@ inputs:
     required: false
   if_mention:
     description: |
-      Specify success or failure or cancelled or always.
+      Specify success or failure or cancelled or fixed or always.
       Multiple statuses can be specified in csv format.
       e.g. success,failure
     default: ''
@@ -69,6 +78,10 @@ inputs:
   failure_message:
     description: Message to use when the status is 'failure'.
     default: ":no_entry: Failed GitHub Actions\n"
+    required: false
+  fixed_message:
+    description: Message to use when the status is 'fixed'.
+    default: ":large_blue_circle: Fixed GitHub Actions\n"
     required: false
   github_token:
     description: Use this if you wish to use a different GitHub token than the one provided by the workflow.

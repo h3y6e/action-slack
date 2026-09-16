@@ -24,7 +24,7 @@ import { http, HttpResponse } from 'msw';
 import commitFixture from '../fixtures/repos.commits.get.json';
 import jobsFixture from '../fixtures/actions.runs.jobs.json';
 import { context } from '@actions/github';
-import { Client, Success, Failure, Cancelled } from './client';
+import { Client, Success, Failure, Cancelled, Fixed } from './client';
 import type { With } from './client';
 
 // ── Slack webhook mock ─────────────────────────────────────────────────
@@ -54,6 +54,7 @@ const defaultWith: With = {
   success_message: 'Succeeded GitHub Actions',
   cancelled_message: 'Cancelled GitHub Actions',
   failure_message: 'Failed GitHub Actions',
+  fixed_message: 'Fixed GitHub Actions',
 };
 
 // ── Test suite ─────────────────────────────────────────────────────────
@@ -165,6 +166,20 @@ describe('Client (integration)', () => {
       const payload = await createClient({ status: Cancelled }).prepare('');
 
       expect(payload.attachments[0].color).toBe('warning');
+    });
+
+    it('maps status to color: fixed -> #2196F3', async () => {
+      interceptGitHubApi();
+      const payload = await createClient({ status: Fixed }).prepare('');
+
+      expect(payload.attachments[0].color).toBe('#2196F3');
+    });
+
+    it('uses fixed_message when text is empty', async () => {
+      interceptGitHubApi();
+      const payload = await createClient({ status: Fixed }).prepare('');
+
+      expect(payload.text).toBe('Fixed GitHub Actions');
     });
 
     it('uses default status message when text is empty', async () => {
