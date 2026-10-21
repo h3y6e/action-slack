@@ -1,5 +1,9 @@
 # Changelog
 
+## [v4.0.11](https://github.com/h3y6e/action-slack/compare/v4.0.10...v4.0.11) - 2026-10-21
+
+- fix(deps): update Node.js runtime to 24.22.1 by @h3y6e in https://github.com/h3y6e/action-slack/pull/141
+
 ## [v4.0.10](https://github.com/h3y6e/action-slack/compare/v4.0.9...v4.0.10) - 2026-09-16
 
 - chore(deps): update actions/cache action to v5.0.5 by @renovate[bot] in https://github.com/h3y6e/action-slack/pull/82
